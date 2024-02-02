@@ -1,4 +1,5 @@
-﻿using Infrastructure.Exceptions;
+﻿using AutoMapper;
+using Infrastructure.Exceptions;
 using Infrastructure.Services;
 using Infrastructure.Services.Interfaces;
 using UserTest.Host.Data;
@@ -12,13 +13,16 @@ namespace UserTest.Host.Services
 {
     public class UserTestService : BaseDataService<ApplicationDbContext>, IUserTestService
     {
-        private readonly IUserTestRepository _userTestManageRepository;
-        public UserTestService(IUserTestRepository userTestManageRepository,
+        private readonly IUserTestRepository _userTestRepository;
+        private readonly IMapper _mapper;
+        public UserTestService(IUserTestRepository userTestRepository,
+            IMapper mapper,
             IDbContextWrapper<ApplicationDbContext> dbContextWrapper,
             ILogger<BaseDataService<ApplicationDbContext>> logger)
             : base(dbContextWrapper, logger)
         {
-            _userTestManageRepository = userTestManageRepository;
+            _mapper = mapper;
+            _userTestRepository = userTestRepository;
         }
 
         public async Task AddUserTestAsync(AddUserTestRequest userTest)
@@ -29,35 +33,46 @@ namespace UserTest.Host.Services
                 {
                     UserId = userTest.UserId,
                     TestId = userTest.TestId,
+                    IsTestCompleted = userTest.IsTestCompleted,
                     Mark = userTest.Mark,
                 };
 
-                await _userTestManageRepository.AddUserTestAsync(userTestAdd);
+                await _userTestRepository.AddUserTestAsync(userTestAdd);
             });
         }
 
-        public async Task DeleteUserTestAsync(int userTestId)
+        public async Task DeleteUserTestAsync(string userId, int testId)
         {
-            var userTestExists = await ExecuteSafeAsync(async () => await _userTestManageRepository.GetUserTestAsync(userTestId));
+            var userTestExists = await ExecuteSafeAsync(async () => await _userTestRepository.GetUserTestAsync(userId, testId));
 
             if (userTestExists == null)
             {
-                throw new BusinessException($"UserTest with id: {userTestId} not found");
+                throw new BusinessException($"User Test with user id {userId} and testId {testId} not found");
             }
 
             await ExecuteSafeAsync(async () =>
             {
-                await _userTestManageRepository.DeleteUserTestAsync(userTestExists);
+                await _userTestRepository.DeleteUserTestAsync(userTestExists);
+            });
+        }
+
+        public async Task<IEnumerable<UserTestDto>> GetUserTestsAsync(string userId, bool isTestComleted)
+        {
+            return await ExecuteSafeAsync(async () =>
+            {
+                var result = await _userTestRepository.GetUserTestsAsync(userId, isTestComleted);
+                var mappedResult = result.Select(s => _mapper.Map<UserTestDto>(s)).ToList();
+                return mappedResult;
             });
         }
 
         public async Task UpdateUserTestAsync(UpdateUserTestRequest userTest)
         {
-            var userTestExists = await ExecuteSafeAsync(async () => await _userTestManageRepository.GetUserTestAsync(userTest.Id));
+            var userTestExists = await ExecuteSafeAsync(async () => await _userTestRepository.GetUserTestAsync(userTest.UserId, userTest.TestId));
 
             if (userTestExists == null)
             {
-                throw new BusinessException($"UserTest with id: {userTest.Id} not found");
+                throw new BusinessException($"User Test with user id {userTest.UserId} and testId {userTest.TestId} not found");
             }
 
             if (userTest.TestId != null)
@@ -70,6 +85,11 @@ namespace UserTest.Host.Services
                 userTestExists.UserId = userTest.UserId;
             }
 
+            if (userTest.IsTestCompleted != null)
+            {
+                userTestExists.IsTestCompleted = userTest.IsTestCompleted;
+            }
+
             if (userTest.Mark != null)
             {
                 userTestExists.Mark = userTest.Mark;
@@ -77,7 +97,7 @@ namespace UserTest.Host.Services
 
             await ExecuteSafeAsync(async () =>
             {
-                await _userTestManageRepository.UpdateUserTestAsync(userTestExists);
+                await _userTestRepository.UpdateUserTestAsync(userTestExists);
             });
         }
     }

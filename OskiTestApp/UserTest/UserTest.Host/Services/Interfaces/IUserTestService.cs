@@ -7,6 +7,7 @@ namespace UserTest.Host.Services.Interfaces
     {
         Task AddUserTestAsync(AddUserTestRequest userTest);
         Task UpdateUserTestAsync(UpdateUserTestRequest userTest);
-        Task DeleteUserTestAsync(int userTestId);
+        Task DeleteUserTestAsync(string userId, int testId);
+        Task<IEnumerable<UserTestDto>> GetUserTestsAsync(string userId, bool isTestComleted);
     }
 }

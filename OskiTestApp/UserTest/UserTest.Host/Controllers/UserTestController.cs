@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using UserTest.Host.Models.Dtos;
 using UserTest.Host.Models.Requests;
 using UserTest.Host.Services.Interfaces;
 
@@ -10,17 +11,25 @@ namespace UserTest.Host.Controllers
     [ApiController]
     public class UserTestController : ControllerBase
     {
-        private readonly IUserTestService _userTestManageService;
-        public UserTestController(IUserTestService userTestManageService)
+        private readonly IUserTestService _userTestService;
+        public UserTestController(IUserTestService userTestService)
         {
-            _userTestManageService = userTestManageService;
+            _userTestService = userTestService;
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<UserTestDto>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetUserTestsAsync([FromQuery] string userId, [FromQuery] bool isTestComleted)
+        {
+            var result = await _userTestService.GetUserTestsAsync(userId, isTestComleted);
+            return Ok(result);
         }
 
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddUserAsync([FromBody] AddUserTestRequest userTest)
         {
-            await _userTestManageService.AddUserTestAsync(userTest);
+            await _userTestService.AddUserTestAsync(userTest);
             return Ok();
         }
 
@@ -28,15 +37,15 @@ namespace UserTest.Host.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateUserTestAsync([FromBody] UpdateUserTestRequest userTest)
         {
-            await _userTestManageService.UpdateUserTestAsync(userTest);
+            await _userTestService.UpdateUserTestAsync(userTest);
             return Ok();
         }
 
         [HttpDelete]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<IActionResult> DeleteUserTestAsync([FromQuery] int id)
+        public async Task<IActionResult> DeleteUserTestAsync([FromQuery] string userId, [FromQuery] int testId)
         {
-            await _userTestManageService.DeleteUserTestAsync(id);
+            await _userTestService.DeleteUserTestAsync(userId, testId);
             return Ok();
         }
     }

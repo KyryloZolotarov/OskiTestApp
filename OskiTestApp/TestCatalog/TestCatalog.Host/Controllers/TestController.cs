@@ -12,17 +12,17 @@ namespace TestCatalog.Host.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
-        private readonly ITestService _testManageService;
-        public TestController(ITestService testManageService)
+        private readonly ITestService _testService;
+        public TestController(ITestService testService)
         {
-            _testManageService = testManageService;
+            _testService = testService;
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<TestDto>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(TestDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetTestAsync([FromBody] int testId)
         {
-            var result = await _testManageService.GetTestAsync(testId);
+            var result = await _testService.GetTestAsync(testId);
             return Ok(result);
         }
 
@@ -30,7 +30,7 @@ namespace TestCatalog.Host.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddTestAsync([FromBody] AddTestRequest test)
         {
-            await _testManageService.AddTestAsync(test);
+            await _testService.AddTestAsync(test);
             return Ok();
         }
 
@@ -38,7 +38,7 @@ namespace TestCatalog.Host.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateTestAsync([FromBody] UpdateTestRequest test)
         {
-            await _testManageService.UpdateTestAsync(test);
+            await _testService.UpdateTestAsync(test);
             return Ok();
         }
 
@@ -46,7 +46,7 @@ namespace TestCatalog.Host.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> DeleteTestAsync([FromQuery] int id)
         {
-            await _testManageService.DeleteTestAsync(id);
+            await _testService.DeleteTestAsync(id);
             return Ok();
         }
     }

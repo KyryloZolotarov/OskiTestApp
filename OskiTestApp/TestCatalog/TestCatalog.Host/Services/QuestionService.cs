@@ -14,14 +14,14 @@ namespace TestCatalog.Host.Services
 {
     public class QuestionService : BaseDataService<ApplicationDbContext>, IQuestionService
     {
-        private readonly IQuestionRepository _questionManageRepository;
+        private readonly IQuestionRepository _questionRepository;
 
-        public QuestionService(IQuestionRepository questionManageRepository,
+        public QuestionService(IQuestionRepository questionRepository,
         IDbContextWrapper<ApplicationDbContext> dbContextWrapper,
         ILogger<BaseDataService<ApplicationDbContext>> logger)
             : base(dbContextWrapper, logger)
         {
-            _questionManageRepository = questionManageRepository;
+            _questionRepository = questionRepository;
         }
         public async Task AddQuestionAsync(AddQuestionRequest question)
         {
@@ -39,13 +39,13 @@ namespace TestCatalog.Host.Services
                         Name = question.Test.Name
                     } 
                 };
-                await _questionManageRepository.AddQuestionAsync(questionAdd);
+                await _questionRepository.AddQuestionAsync(questionAdd);
             });
         }
 
         public async Task DeleteQuestionAsync(int questionId)
         {
-            var questionExists = await ExecuteSafeAsync(async () => await _questionManageRepository.GetQuestionAsync(questionId));
+            var questionExists = await ExecuteSafeAsync(async () => await _questionRepository.GetQuestionAsync(questionId));
 
             if (questionExists == null)
             {
@@ -54,13 +54,13 @@ namespace TestCatalog.Host.Services
 
             await ExecuteSafeAsync(async () =>
             {
-                await _questionManageRepository.DeleteQuestionAsync(questionExists);
+                await _questionRepository.DeleteQuestionAsync(questionExists);
             });
         }
 
         public async Task UpdateQuestionAsync(UpdateQuestionRequest question)
         {
-            var questionExists = await ExecuteSafeAsync(async () => await _questionManageRepository.GetQuestionAsync(question.Id));
+            var questionExists = await ExecuteSafeAsync(async () => await _questionRepository.GetQuestionAsync(question.Id));
 
             if (questionExists == null)
             {
@@ -89,7 +89,7 @@ namespace TestCatalog.Host.Services
 
             await ExecuteSafeAsync(async () =>
             {
-                await _questionManageRepository.UpdateQuestionAsync(questionExists);
+                await _questionRepository.UpdateQuestionAsync(questionExists);
             });
         }
     }

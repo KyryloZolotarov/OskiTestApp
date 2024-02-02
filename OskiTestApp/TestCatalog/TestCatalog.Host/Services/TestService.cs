@@ -14,17 +14,17 @@ namespace TestCatalog.Host.Services
 {
     public class TestService : BaseDataService<ApplicationDbContext>, ITestService
     {
-        private readonly ITestRepository _testManageRepository;
+        private readonly ITestRepository _testRepository;
         private readonly IMapper _mapper;
 
-        public TestService(ITestRepository testManageRepository,
+        public TestService(ITestRepository testRepository,
             IMapper mapper,
-        IDbContextWrapper<ApplicationDbContext> dbContextWrapper,
-        ILogger<BaseDataService<ApplicationDbContext>> logger)
+            IDbContextWrapper<ApplicationDbContext> dbContextWrapper,
+            ILogger<BaseDataService<ApplicationDbContext>> logger)
             : base(dbContextWrapper, logger)
         {
             _mapper = mapper;
-            _testManageRepository = testManageRepository;
+            _testRepository = testRepository;
         }
         public async Task AddTestAsync(AddTestRequest test)
         {
@@ -35,13 +35,13 @@ namespace TestCatalog.Host.Services
                     Description = test.Description,
                     Name = test.Name,
                 };
-                await _testManageRepository.AddTestAsync(testAdd);
+                await _testRepository.AddTestAsync(testAdd);
             });
         }
 
         public async Task DeleteTestAsync(int testId)
         {
-            var testExists = await ExecuteSafeAsync(async () => await _testManageRepository.GetTestAsync(testId));
+            var testExists = await ExecuteSafeAsync(async () => await _testRepository.GetTestAsync(testId));
 
             if (testExists == null)
             {
@@ -50,7 +50,7 @@ namespace TestCatalog.Host.Services
 
             await ExecuteSafeAsync(async () =>
             {
-                await _testManageRepository.DeleteTestAsync(testExists);
+                await _testRepository.DeleteTestAsync(testExists);
             });
         }
 
@@ -59,7 +59,7 @@ namespace TestCatalog.Host.Services
 
             return await ExecuteSafeAsync(async () =>
             {
-                var result = await _testManageRepository.GetTestAsync(testId);
+                var result = await _testRepository.GetTestAsync(testId);
                 var mappedResult = _mapper.Map<TestDto>(result);
                 return mappedResult;
             });
@@ -67,7 +67,7 @@ namespace TestCatalog.Host.Services
 
         public async Task UpdateTestAsync(UpdateTestRequest test)
         {
-            var testExists = await ExecuteSafeAsync(async () => await _testManageRepository.GetTestAsync(test.Id));
+            var testExists = await ExecuteSafeAsync(async () => await _testRepository.GetTestAsync(test.Id));
 
             if (testExists == null)
             {
@@ -86,7 +86,7 @@ namespace TestCatalog.Host.Services
 
             await ExecuteSafeAsync(async () =>
             {
-                await _testManageRepository.UpdateTestAsync(testExists);
+                await _testRepository.UpdateTestAsync(testExists);
             });
         }
     }

@@ -14,13 +14,13 @@ namespace UserProfiles.Host.Services
     public class UserService : BaseDataService<ApplicationDbContext>, IUserService
     {
 
-        private readonly IUserRepository _userManageRepository;
-        public UserService(IUserRepository userManageRepository,
+        private readonly IUserRepository _userRepository;
+        public UserService(IUserRepository userRepository,
             IDbContextWrapper<ApplicationDbContext> dbContextWrapper,
             ILogger<BaseDataService<ApplicationDbContext>> logger)
             : base(dbContextWrapper, logger)
         {
-            _userManageRepository = userManageRepository;
+            _userRepository = userRepository;
         }
 
         public async Task AddUserAsync(AddUserRequest user)
@@ -35,13 +35,13 @@ namespace UserProfiles.Host.Services
                     Password = user.Password
                 };
 
-                await _userManageRepository.AddUserAsync(userAdd);
+                await _userRepository.AddUserAsync(userAdd);
             });
         }
 
         public async Task DeleteUserAsync(string userId)
         {
-            var userExists = await ExecuteSafeAsync(async () => await _userManageRepository.GetUserAsync(userId));
+            var userExists = await ExecuteSafeAsync(async () => await _userRepository.GetUserAsync(userId));
 
             if (userExists == null)
             {
@@ -50,13 +50,13 @@ namespace UserProfiles.Host.Services
 
             await ExecuteSafeAsync(async () =>
             {
-                await _userManageRepository.DeleteUserAsync(userExists);
+                await _userRepository.DeleteUserAsync(userExists);
             });
         }
 
         public async Task UpdateUserAsync(UpdateUserRequest user)
         {
-            var userExists = await ExecuteSafeAsync(async () => await _userManageRepository.GetUserAsync(user.Id));
+            var userExists = await ExecuteSafeAsync(async () => await _userRepository.GetUserAsync(user.Id));
 
             if (userExists == null)
             {
@@ -85,7 +85,7 @@ namespace UserProfiles.Host.Services
 
             await ExecuteSafeAsync(async () =>
             {
-                await _userManageRepository.UpdateUserAsync(userExists);
+                await _userRepository.UpdateUserAsync(userExists);
             });
         }
     }

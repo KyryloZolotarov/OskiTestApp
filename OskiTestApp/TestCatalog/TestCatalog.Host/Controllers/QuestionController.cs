@@ -10,10 +10,10 @@ namespace TestCatalog.Host.Controllers
     [ApiController]
     public class QuestionController : ControllerBase
     {
-        private readonly IQuestionService _questionManageService;
-        public QuestionController(IQuestionService questionManageService)
+        private readonly IQuestionService _questionService;
+        public QuestionController(IQuestionService questionService)
         {
-            _questionManageService = questionManageService;
+            _questionService = questionService;
         }
 
 
@@ -21,7 +21,7 @@ namespace TestCatalog.Host.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddQuestionAsync([FromBody] AddQuestionRequest question)
         {
-            await _questionManageService.AddQuestionAsync(question);
+            await _questionService.AddQuestionAsync(question);
             return Ok();
         }
 
@@ -29,7 +29,7 @@ namespace TestCatalog.Host.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateQuestionAsync([FromBody] UpdateQuestionRequest question)
         {
-            await _questionManageService.UpdateQuestionAsync(question);
+            await _questionService.UpdateQuestionAsync(question);
             return Ok();
         }
 
@@ -37,7 +37,7 @@ namespace TestCatalog.Host.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> DeleteQuestionAsync([FromQuery] int id)
         {
-            await _questionManageService.DeleteQuestionAsync(id);
+            await _questionService.DeleteQuestionAsync(id);
             return Ok();
         }
     }

@@ -10,17 +10,17 @@ namespace UserProfiles.Host.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _userManageService;
-        public UserController(IUserService userManageService)
+        private readonly IUserService _userService;
+        public UserController(IUserService userService)
         {
-            _userManageService = userManageService;
+            _userService = userService;
         }
 
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddUserAsync([FromBody] AddUserRequest user)
         {
-            await _userManageService.AddUserAsync(user);
+            await _userService.AddUserAsync(user);
             return Ok();
         }
 
@@ -28,7 +28,7 @@ namespace UserProfiles.Host.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateUserAsync([FromBody] UpdateUserRequest user)
         {
-            await _userManageService.UpdateUserAsync(user);
+            await _userService.UpdateUserAsync(user);
             return Ok();
         }
 
@@ -36,7 +36,7 @@ namespace UserProfiles.Host.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> DeleteUserAsync([FromBody] string id)
         {
-            await _userManageService.DeleteUserAsync(id);
+            await _userService.DeleteUserAsync(id);
             return Ok();
         }
     }

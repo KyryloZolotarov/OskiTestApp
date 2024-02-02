@@ -1,4 +1,5 @@
 ﻿using UserTest.Host.Data.Entities;
+using UserTest.Host.Models.Dtos;
 
 namespace UserTest.Host.Repositories.Interfaces
 {
@@ -7,6 +8,7 @@ namespace UserTest.Host.Repositories.Interfaces
         Task AddUserTestAsync(UserTestEntity userTest);
         Task UpdateUserTestAsync(UserTestEntity userTest);
         Task DeleteUserTestAsync(UserTestEntity userTest);
-        Task<UserTestEntity> GetUserTestAsync(int userTestId);
+        Task<UserTestEntity> GetUserTestAsync(string userId, int testId);
+        Task<IEnumerable<UserTestEntity>> GetUserTestsAsync(string userId, bool isTestComleted);
     }
 }

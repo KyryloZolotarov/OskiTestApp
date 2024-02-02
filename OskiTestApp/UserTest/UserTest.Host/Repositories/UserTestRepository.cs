@@ -27,9 +27,14 @@ namespace UserTest.Host.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<UserTestEntity> GetUserTestAsync(int userTestId)
+        public async Task<UserTestEntity> GetUserTestAsync(string userId, int testId)
         {
-            return await _dbContext.UserTests.FirstOrDefaultAsync(h => h.Id == userTestId);
+            return await _dbContext.UserTests.FirstOrDefaultAsync(h => h.UserId == userId && h.TestId == testId);
+        }
+
+        public async Task<IEnumerable<UserTestEntity>> GetUserTestsAsync(string userId, bool isTestComleted)
+        {
+            return await _dbContext.UserTests.Where(h => h.UserId == userId && h.IsTestCompleted == isTestComleted).ToListAsync();
         }
 
         public async Task UpdateUserTestAsync(UserTestEntity userTest)

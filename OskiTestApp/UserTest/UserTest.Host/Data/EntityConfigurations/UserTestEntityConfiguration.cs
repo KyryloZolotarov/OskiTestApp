@@ -11,16 +11,15 @@ namespace UserTest.Host.Data.EntityConfigurations
         {
             builder.ToTable("UserTests");
 
-            builder.HasKey(ci => ci.Id);
-
-            builder.Property(ci => ci.Id)
-                .UseHiLo("usertest_hilo")
-                .IsRequired();
+            builder.HasKey(ci => new { ci.UserId, ci.TestId });
 
             builder.Property(ci => ci.UserId)
                 .IsRequired();
 
             builder.Property(cb => cb.TestId)
+                .IsRequired();
+
+            builder.Property(cj => cj.IsTestCompleted)
                 .IsRequired();
 
             builder.Property(cd => cd.Mark)
