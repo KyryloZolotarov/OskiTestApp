@@ -1,8 +1,7 @@
-﻿namespace UserProfiles.Host.Models.Dtos
+﻿namespace UserProfiles.Host.Models.Requests
 {
-    public class UserDto
+    public class AddUserRequest
     {
-        public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }

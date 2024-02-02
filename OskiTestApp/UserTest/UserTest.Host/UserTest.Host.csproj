@@ -28,8 +28,6 @@
 
   <ItemGroup>
     <Folder Include="Mapping\" />
-    <Folder Include="Models\Dtos\" />
-    <Folder Include="Models\Requests\" />
     <Folder Include="Models\Responses\" />
   </ItemGroup>
 

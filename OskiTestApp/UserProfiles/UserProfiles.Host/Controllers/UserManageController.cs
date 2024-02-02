@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using UserProfiles.Host.Models.Requests;
+using UserProfiles.Host.Services.Interfaces;
 
 namespace UserProfiles.Host.Controllers
 {
@@ -7,5 +10,34 @@ namespace UserProfiles.Host.Controllers
     [ApiController]
     public class UserManageController : ControllerBase
     {
+        private readonly IUserManageService _userManageService;
+        public UserManageController(IUserManageService userManageService)
+        {
+            _userManageService = userManageService;
+        }
+
+        [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddUserAsync([FromBody] AddUserRequest user)
+        {
+            await _userManageService.AddUserAsync(user);
+            return Ok();
+        }
+
+        [HttpPut]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateUserAsync([FromBody] UpdateUserRequest user)
+        {
+            await _userManageService.UpdateUserAsync(user);
+            return Ok();
+        }
+
+        [HttpDelete]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteUserAsync([FromBody] string id)
+        {
+            await _userManageService.DeleteUserAsync(id);
+            return Ok();
+        }
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace UserProfiles.Host.Models.Dtos
+﻿namespace UserProfiles.Host.Models.Requests
 {
-    public class UserDto
+    public class UpdateUserRequest
     {
         public string Id { get; set; }
         public string FirstName { get; set; }

@@ -1,10 +1,10 @@
-﻿namespace UserTest.Host.Data.Entities
+﻿namespace UserTest.Host.Models.Dtos
 {
-    public class UserTestEntity
+    public class UserTestDto
     {
         public int Id { get; set; }
         public string UserId { get; set; }
         public int TestId { get; set; }
-        public int Mark {  get; set; }
+        public int Mark { get; set; }
     }
 }

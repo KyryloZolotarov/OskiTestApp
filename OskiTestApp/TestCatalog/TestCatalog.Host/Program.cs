@@ -1,3 +1,8 @@
+using Infrastructure.Services.Interfaces;
+using Infrastructure.Services;
+using Microsoft.EntityFrameworkCore;
+using TestCatalog.Host.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

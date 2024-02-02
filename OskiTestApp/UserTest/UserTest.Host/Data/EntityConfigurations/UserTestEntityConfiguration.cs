@@ -11,6 +11,12 @@ namespace UserTest.Host.Data.EntityConfigurations
         {
             builder.ToTable("UserTests");
 
+            builder.HasKey(ci => ci.Id);
+
+            builder.Property(ci => ci.Id)
+                .UseHiLo("usertest_hilo")
+                .IsRequired();
+
             builder.Property(ci => ci.UserId)
                 .IsRequired();
 
