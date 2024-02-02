@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<QuestionEntity> Questions { get; set; }
+        public string Description { get; set; }
     }
 }
