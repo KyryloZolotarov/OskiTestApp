@@ -1,4 +1,5 @@
-﻿using Infrastructure.Exceptions;
+﻿using AutoMapper;
+using Infrastructure.Exceptions;
 using Infrastructure.Services;
 using Infrastructure.Services.Interfaces;
 using TestCatalog.Host.Data;
@@ -11,15 +12,18 @@ using TestCatalog.Host.Services.Interfaces;
 
 namespace TestCatalog.Host.Services
 {
-    public class TestManageService : BaseDataService<ApplicationDbContext>, ITestManageService
+    public class TestService : BaseDataService<ApplicationDbContext>, ITestService
     {
-        private readonly ITestManageRepository _testManageRepository;
+        private readonly ITestRepository _testManageRepository;
+        private readonly IMapper _mapper;
 
-        public TestManageService(ITestManageRepository testManageRepository,
+        public TestService(ITestRepository testManageRepository,
+            IMapper mapper,
         IDbContextWrapper<ApplicationDbContext> dbContextWrapper,
         ILogger<BaseDataService<ApplicationDbContext>> logger)
             : base(dbContextWrapper, logger)
         {
+            _mapper = mapper;
             _testManageRepository = testManageRepository;
         }
         public async Task AddTestAsync(AddTestRequest test)
@@ -47,6 +51,17 @@ namespace TestCatalog.Host.Services
             await ExecuteSafeAsync(async () =>
             {
                 await _testManageRepository.DeleteTestAsync(testExists);
+            });
+        }
+
+        public async Task<TestDto> GetTestAsync(int testId)
+        {
+
+            return await ExecuteSafeAsync(async () =>
+            {
+                var result = await _testManageRepository.GetTestAsync(testId);
+                var mappedResult = _mapper.Map<TestDto>(result);
+                return mappedResult;
             });
         }
 

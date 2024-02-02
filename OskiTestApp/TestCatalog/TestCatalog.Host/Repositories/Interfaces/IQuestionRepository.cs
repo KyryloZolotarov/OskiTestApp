@@ -2,7 +2,7 @@
 
 namespace TestCatalog.Host.Repositories.Interfaces
 {
-    public interface IQuestionManageRepository
+    public interface IQuestionRepository
     {
         Task AddQuestionAsync(QuestionEntity question);
         Task UpdateQuestionAsync(QuestionEntity question);

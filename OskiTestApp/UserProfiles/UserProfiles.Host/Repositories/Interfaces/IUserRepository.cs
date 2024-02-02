@@ -2,7 +2,7 @@
 
 namespace UserProfiles.Host.Repositories.Interfaces
 {
-    public interface IUserManageRepository
+    public interface IUserRepository
     {
         Task AddUserAsync(UserEntity user);
         Task UpdateUserAsync(UserEntity user);

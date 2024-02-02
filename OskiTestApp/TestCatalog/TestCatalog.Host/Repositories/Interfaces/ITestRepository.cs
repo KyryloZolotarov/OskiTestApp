@@ -2,7 +2,7 @@
 
 namespace TestCatalog.Host.Repositories.Interfaces
 {
-    public interface ITestManageRepository
+    public interface ITestRepository
     {
         Task AddTestAsync(TestEntity test);
         Task UpdateTestAsync(TestEntity test);

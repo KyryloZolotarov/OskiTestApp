@@ -3,7 +3,7 @@ using UserTest.Host.Models.Requests;
 
 namespace UserTest.Host.Services.Interfaces
 {
-    public interface IUserTestManageService
+    public interface IUserTestService
     {
         Task AddUserTestAsync(AddUserTestRequest userTest);
         Task UpdateUserTestAsync(UpdateUserTestRequest userTest);

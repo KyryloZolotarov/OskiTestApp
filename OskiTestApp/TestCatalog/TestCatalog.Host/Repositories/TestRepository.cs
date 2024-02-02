@@ -1,42 +1,41 @@
 ﻿using Infrastructure.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
 using TestCatalog.Host.Data;
 using TestCatalog.Host.Data.Entities;
 using TestCatalog.Host.Repositories.Interfaces;
 
 namespace TestCatalog.Host.Repositories
 {
-    public class QuestionManageRepository : IQuestionManageRepository
+    public class TestRepository : ITestRepository
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public QuestionManageRepository(
+        public TestRepository(
             IDbContextWrapper<ApplicationDbContext> dbContextWrapper)
         {
             _dbContext = dbContextWrapper.DbContext;
         }
 
-        public async Task AddQuestionAsync(QuestionEntity question)
+        public async Task AddTestAsync(TestEntity test)
         {
-            await _dbContext.Questions.AddAsync(question);
+            await _dbContext.Tests.AddAsync(test);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteQuestionAsync(QuestionEntity question)
+        public async Task DeleteTestAsync(TestEntity test)
         {
-            _dbContext.Questions.Remove(question);
+            _dbContext.Tests.Remove(test);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<QuestionEntity> GetQuestionAsync(int questionId)
+        public async Task<TestEntity> GetTestAsync(int testId)
         {
-            return await _dbContext.Questions.FirstOrDefaultAsync(h => h.Id == questionId);
+            return await _dbContext.Tests.FirstOrDefaultAsync(h => h.Id == testId);
         }
 
-        public async Task UpdateQuestionAsync(QuestionEntity question)
+        public async Task UpdateTestAsync(TestEntity test)
         {
-            _dbContext.Questions.Update(question);
+            _dbContext.Tests.Update(test);
             await _dbContext.SaveChangesAsync();
         }
     }

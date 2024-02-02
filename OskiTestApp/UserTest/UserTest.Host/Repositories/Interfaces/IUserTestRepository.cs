@@ -2,7 +2,7 @@
 
 namespace UserTest.Host.Repositories.Interfaces
 {
-    public interface IUserTestManageRepository
+    public interface IUserTestRepository
     {
         Task AddUserTestAsync(UserTestEntity userTest);
         Task UpdateUserTestAsync(UserTestEntity userTest);

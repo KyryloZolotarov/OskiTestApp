@@ -3,7 +3,7 @@ using UserProfiles.Host.Models.Requests;
 
 namespace UserProfiles.Host.Services.Interfaces
 {
-    public interface IUserManageService
+    public interface IUserService
     {
         Task AddUserAsync(AddUserRequest user);
         Task UpdateUserAsync(UpdateUserRequest user);

@@ -5,7 +5,8 @@
         public int Id { get; set; }
         public int TestId { get; set; }
         public TestEntity Test { get; set; }
-        public List<string> WrongAnswers { get; set; }
-        public List<string> CorrectAnswers { get; set; }
+        public string Question { get; set; }
+        public Dictionary<int, string> AnswerVariants { get; set; }
+        public List<int> CorrectAnswers { get; set; }
     }
 }

@@ -8,10 +8,10 @@ namespace TestCatalog.Host.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class QuestionManageController : ControllerBase
+    public class QuestionController : ControllerBase
     {
-        private readonly IQuestionManageService _questionManageService;
-        public QuestionManageController(IQuestionManageService questionManageService)
+        private readonly IQuestionService _questionManageService;
+        public QuestionController(IQuestionService questionManageService)
         {
             _questionManageService = questionManageService;
         }

@@ -10,10 +10,10 @@ using UserTest.Host.Services.Interfaces;
 
 namespace UserTest.Host.Services
 {
-    public class UserTestManageService : BaseDataService<ApplicationDbContext>, IUserTestManageService
+    public class UserTestService : BaseDataService<ApplicationDbContext>, IUserTestService
     {
-        private readonly IUserTestManageRepository _userTestManageRepository;
-        public UserTestManageService(IUserTestManageRepository userTestManageRepository,
+        private readonly IUserTestRepository _userTestManageRepository;
+        public UserTestService(IUserTestRepository userTestManageRepository,
             IDbContextWrapper<ApplicationDbContext> dbContextWrapper,
             ILogger<BaseDataService<ApplicationDbContext>> logger)
             : base(dbContextWrapper, logger)

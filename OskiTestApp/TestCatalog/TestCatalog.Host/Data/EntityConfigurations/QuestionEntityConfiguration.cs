@@ -20,10 +20,14 @@ namespace TestCatalog.Host.Data.EntityConfigurations
             builder.Property(cb => cb.TestId)
                 .IsRequired();
 
+            builder.Property(cg => cg.Question)
+                .IsRequired()
+                .HasMaxLength(200);
+
             builder.Property(ci => ci.CorrectAnswers)
                 .IsRequired();
 
-            builder.Property(ci => ci.WrongAnswers)
+            builder.Property(ci => ci.AnswerVariants)
                 .IsRequired();
 
             builder.HasOne(ci => ci.Test)

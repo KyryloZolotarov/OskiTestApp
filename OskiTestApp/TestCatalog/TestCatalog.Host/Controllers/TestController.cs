@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using TestCatalog.Host.Models.Dtos;
 using TestCatalog.Host.Models.Requests;
 using TestCatalog.Host.Services;
 using TestCatalog.Host.Services.Interfaces;
@@ -9,12 +10,20 @@ namespace TestCatalog.Host.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TestManageController : ControllerBase
+    public class TestController : ControllerBase
     {
-        private readonly ITestManageService _testManageService;
-        public TestManageController(ITestManageService testManageService)
+        private readonly ITestService _testManageService;
+        public TestController(ITestService testManageService)
         {
             _testManageService = testManageService;
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<TestDto>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetTestAsync([FromBody] int testId)
+        {
+            var result = await _testManageService.GetTestAsync(testId);
+            return Ok(result);
         }
 
         [HttpPost]

@@ -4,7 +4,7 @@ using TestCatalog.Host.Models.Requests;
 
 namespace TestCatalog.Host.Services.Interfaces
 {
-    public interface IQuestionManageService
+    public interface IQuestionService
     {
         Task AddQuestionAsync(AddQuestionRequest question);
         Task UpdateQuestionAsync(UpdateQuestionRequest question);

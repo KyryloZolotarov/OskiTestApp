@@ -12,11 +12,11 @@ using TestCatalog.Host.Services.Interfaces;
 
 namespace TestCatalog.Host.Services
 {
-    public class QuestionManageService : BaseDataService<ApplicationDbContext>, IQuestionManageService
+    public class QuestionService : BaseDataService<ApplicationDbContext>, IQuestionService
     {
-        private readonly IQuestionManageRepository _questionManageRepository;
+        private readonly IQuestionRepository _questionManageRepository;
 
-        public QuestionManageService(IQuestionManageRepository questionManageRepository,
+        public QuestionService(IQuestionRepository questionManageRepository,
         IDbContextWrapper<ApplicationDbContext> dbContextWrapper,
         ILogger<BaseDataService<ApplicationDbContext>> logger)
             : base(dbContextWrapper, logger)
@@ -30,7 +30,8 @@ namespace TestCatalog.Host.Services
             {
                 var questionAdd = new QuestionEntity() { TestId = question.TestId,
                     CorrectAnswers = question.CorrectAnswers,
-                    WrongAnswers = question.WrongAnswers,
+                    AnswerVariants = question.AnswerVariants,
+                    Question = question.Question,
                     Test = new TestEntity 
                     { 
                         Id = question.Test.Id,
@@ -66,14 +67,19 @@ namespace TestCatalog.Host.Services
                 throw new BusinessException($"Question with id: {question.Id} not found");
             }
 
-            if (question.WrongAnswers != null)
+            if (question.AnswerVariants != null)
             {
-                questionExists.WrongAnswers = question.WrongAnswers;
+                questionExists.AnswerVariants = question.AnswerVariants;
             }
 
             if (question.CorrectAnswers != null)
             {
                 questionExists.CorrectAnswers = question.CorrectAnswers;
+            }
+
+            if (question.Question != null)
+            {
+                questionExists.Question = question.Question;
             }
 
             if (question.TestId != null)

@@ -7,11 +7,11 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace UserProfiles.Host.Repositories
 {
-    public class UserManageRepository : IUserManageRepository
+    public class UserRepository : IUserRepository
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public UserManageRepository(
+        public UserRepository(
             IDbContextWrapper<ApplicationDbContext> dbContextWrapper)
         {
             _dbContext = dbContextWrapper.DbContext;

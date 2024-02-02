@@ -11,11 +11,11 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace UserProfiles.Host.Services
 {
-    public class UserManageService : BaseDataService<ApplicationDbContext>, IUserManageService
+    public class UserService : BaseDataService<ApplicationDbContext>, IUserService
     {
 
-        private readonly IUserManageRepository _userManageRepository;
-        public UserManageService(IUserManageRepository userManageRepository,
+        private readonly IUserRepository _userManageRepository;
+        public UserService(IUserRepository userManageRepository,
             IDbContextWrapper<ApplicationDbContext> dbContextWrapper,
             ILogger<BaseDataService<ApplicationDbContext>> logger)
             : base(dbContextWrapper, logger)

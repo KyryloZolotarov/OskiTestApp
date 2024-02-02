@@ -6,10 +6,10 @@ using UserTest.Host.Repositories.Interfaces;
 
 namespace UserTest.Host.Repositories
 {
-    public class UserTestManageRepository : IUserTestManageRepository
+    public class UserTestRepository : IUserTestRepository
     {
         private readonly ApplicationDbContext _dbContext;
-        public UserTestManageRepository(
+        public UserTestRepository(
             IDbContextWrapper<ApplicationDbContext> dbContextWrapper)
         {
             _dbContext = dbContextWrapper.DbContext;

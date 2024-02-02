@@ -8,10 +8,10 @@ namespace UserTest.Host.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserTestManageController : ControllerBase
+    public class UserTestController : ControllerBase
     {
-        private readonly IUserTestManageService _userTestManageService;
-        public UserTestManageController(IUserTestManageService userTestManageService)
+        private readonly IUserTestService _userTestManageService;
+        public UserTestController(IUserTestService userTestManageService)
         {
             _userTestManageService = userTestManageService;
         }

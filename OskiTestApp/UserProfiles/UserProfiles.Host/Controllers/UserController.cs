@@ -8,10 +8,10 @@ namespace UserProfiles.Host.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserManageController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly IUserManageService _userManageService;
-        public UserManageController(IUserManageService userManageService)
+        private readonly IUserService _userManageService;
+        public UserController(IUserService userManageService)
         {
             _userManageService = userManageService;
         }
