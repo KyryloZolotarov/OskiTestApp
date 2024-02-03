@@ -1,22 +1,50 @@
-var builder = WebApplication.CreateBuilder(args);
+using Web.Server.Repositories;
+using Web.Server.Repositories.Interfaces;
+using Web.Server.Services;
+using Web.Server.Services.Interfaces;
 
-// Add services to the container.
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        var configuration = GetConfiguration();
 
-builder.Services.AddControllers();
+        var builder = WebApplication.CreateBuilder(args);
 
-var app = builder.Build();
+        builder.Services.AddTransient<ITestService, TestService>();
+        builder.Services.AddTransient<IUserTestRepository, UserTestRepository>();
+        builder.Services.AddTransient<IUserService, UserService>();
+        builder.Services.AddTransient<IUserRepository, UserRepository>();
+        builder.Services.AddTransient<ITestRepository, TestRepository>();
 
-app.UseDefaultFiles();
-app.UseStaticFiles();
+        builder.Services.AddControllers();
+        builder.Services.AddOptions();
+        builder.Services.AddMemoryCache();
+        var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+        app.UseSwagger()
+            .UseSwaggerUI(setup =>
+            {
+                setup.SwaggerEndpoint($"{configuration["PathBase"]}/swagger/v1/swagger.json", "Web.Server.API V1");
+            });
 
-app.UseHttpsRedirection();
+        app.UseRouting();
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapDefaultControllerRoute();
+            endpoints.MapControllers();
+        });
 
-app.UseAuthorization();
+        app.Run();
 
-app.MapControllers();
+        IConfiguration GetConfiguration()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", false, true)
+                .AddEnvironmentVariables();
 
-app.MapFallbackToFile("/index.html");
-
-app.Run();
+            return builder.Build();
+        }
+    }
+}

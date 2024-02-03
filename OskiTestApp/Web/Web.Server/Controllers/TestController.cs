@@ -18,7 +18,7 @@ namespace Web.Server.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<TestViewModel>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(TestsNamesViewModel), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAvailableTests([FromQuery] string userId)
         {
             var result = await _testService.GetAvailableTests(userId);

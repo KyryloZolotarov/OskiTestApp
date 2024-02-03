@@ -1,9 +1,11 @@
-﻿using Web.Server.ViewModels;
+﻿using Web.Server.Models.Dtos;
+using Web.Server.ViewModels;
 
 namespace Web.Server.Repositories.Interfaces
 {
     public interface IUserTestRepository
     {
-        Task<TestViewModel> GetSelectedTest(int testId);
+        Task<IEnumerable<UserTestDto>> GetAvailableTestsAsync(string userId);
+        Task<IEnumerable<UserTestDto>> GetPassedTestsAsync(string userId);
     }
 }

@@ -1,4 +1,6 @@
 ﻿using TestCatalog.Host.Data.Entities;
+using TestCatalog.Host.Models.Requests;
+using TestCatalog.Host.Models.Responses;
 
 namespace TestCatalog.Host.Repositories.Interfaces
 {
@@ -8,5 +10,6 @@ namespace TestCatalog.Host.Repositories.Interfaces
         Task UpdateTestAsync(TestEntity test);
         Task DeleteTestAsync(TestEntity test);
         Task<TestEntity> GetTestAsync(int testId);
+        Task<IEnumerable<TestEntity>> GetTestsNamesAsync(TestsNamesRequest testsIds);
     }
 }

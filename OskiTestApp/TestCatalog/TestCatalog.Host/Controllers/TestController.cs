@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using TestCatalog.Host.Models.Dtos;
 using TestCatalog.Host.Models.Requests;
+using TestCatalog.Host.Models.Responses;
 using TestCatalog.Host.Services;
 using TestCatalog.Host.Services.Interfaces;
 
@@ -20,9 +21,17 @@ namespace TestCatalog.Host.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(TestDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetTestAsync([FromBody] int testId)
+        public async Task<IActionResult> GetTestAsync([FromRoute] int testId)
         {
             var result = await _testService.GetTestAsync(testId);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(TestsNamesResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetTestsNamesAsync([FromBody] TestsNamesRequest testsIds)
+        {
+            var result = await _testService.GetTestsNamesAsync(testsIds);
             return Ok(result);
         }
 

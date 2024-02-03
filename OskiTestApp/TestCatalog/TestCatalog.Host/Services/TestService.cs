@@ -6,6 +6,7 @@ using TestCatalog.Host.Data;
 using TestCatalog.Host.Data.Entities;
 using TestCatalog.Host.Models.Dtos;
 using TestCatalog.Host.Models.Requests;
+using TestCatalog.Host.Models.Responses;
 using TestCatalog.Host.Repositories;
 using TestCatalog.Host.Repositories.Interfaces;
 using TestCatalog.Host.Services.Interfaces;
@@ -62,6 +63,20 @@ namespace TestCatalog.Host.Services
                 var result = await _testRepository.GetTestAsync(testId);
                 var mappedResult = _mapper.Map<TestDto>(result);
                 return mappedResult;
+            });
+        }
+
+        public async Task<TestsNamesResponse> GetTestsNamesAsync(TestsNamesRequest testsIds)
+        {
+            return await ExecuteSafeAsync(async () =>
+            {
+                var result = await _testRepository.GetTestsNamesAsync(testsIds);
+                var testsNames = new TestsNamesResponse() { Names = new Dictionary<int, string>() };
+                foreach(var test in result)
+                {
+                    testsNames.Names.Add(test.Id, test.Name);
+                }
+                return testsNames;
             });
         }
 

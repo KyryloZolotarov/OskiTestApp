@@ -5,7 +5,7 @@ namespace Web.Server.Services.Interfaces
 {
     public interface ITestService
     {
-        Task<IEnumerable<TestViewModel>> GetAvailableTests(string userId);
+        Task<TestsNamesViewModel> GetAvailableTests(string userId);
         Task<TestViewModel> GetSelectedTest(int testId);
         Task<IEnumerable<TestViewModel>> GetPassedTests(string userId);
     }

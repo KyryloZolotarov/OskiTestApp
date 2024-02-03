@@ -1,5 +1,6 @@
 ﻿using TestCatalog.Host.Models.Dtos;
 using TestCatalog.Host.Models.Requests;
+using TestCatalog.Host.Models.Responses;
 
 namespace TestCatalog.Host.Services.Interfaces
 {
@@ -9,5 +10,6 @@ namespace TestCatalog.Host.Services.Interfaces
         Task UpdateTestAsync(UpdateTestRequest test);
         Task DeleteTestAsync(int testId);
         Task<TestDto> GetTestAsync(int testId);
+        Task<TestsNamesResponse> GetTestsNamesAsync(TestsNamesRequest testsIds);
     }
 }

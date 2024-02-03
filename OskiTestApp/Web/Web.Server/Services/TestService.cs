@@ -1,4 +1,5 @@
-﻿using Web.Server.Repositories.Interfaces;
+﻿using Web.Server.Models.Requests;
+using Web.Server.Repositories.Interfaces;
 using Web.Server.Services.Interfaces;
 using Web.Server.ViewModels;
 
@@ -16,9 +17,21 @@ namespace Web.Server.Services
             _userTestRepository = userTestRepository;
         }
 
-        public async Task<IEnumerable<TestViewModel>> GetAvailableTests(string userId)
+        public async Task<TestsNamesViewModel> GetAvailableTests(string userId)
         {
-            throw new NotImplementedException();
+            var availableTests = await _userTestRepository.GetAvailableTestsAsync(userId);
+            var listTestIds = new TestsNamesRequest() { TestIds = new List<int>() };
+            foreach(var test in  availableTests)
+            {
+                listTestIds.TestIds.Add(test.TestId);
+            }
+            var result = await _testRepository.GetTestNamesAsync(listTestIds);
+            var listTestIdsWithNames = new TestsNamesViewModel() { Names = new Dictionary<int, string>() };
+            foreach(var name in  result.Names)
+            {
+                listTestIdsWithNames.Names.Add(name.Key, name.Value);
+            }
+            return listTestIdsWithNames;
         }
 
         public async Task<IEnumerable<TestViewModel>> GetPassedTests(string userId)
