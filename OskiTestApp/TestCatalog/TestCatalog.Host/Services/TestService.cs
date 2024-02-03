@@ -16,14 +16,17 @@ namespace TestCatalog.Host.Services
     public class TestService : BaseDataService<ApplicationDbContext>, ITestService
     {
         private readonly ITestRepository _testRepository;
+        private readonly IQuestionRepository _questionRepository;
         private readonly IMapper _mapper;
 
-        public TestService(ITestRepository testRepository,
+        public TestService(IQuestionRepository questionRepository, 
+            ITestRepository testRepository,
             IMapper mapper,
             IDbContextWrapper<ApplicationDbContext> dbContextWrapper,
             ILogger<BaseDataService<ApplicationDbContext>> logger)
             : base(dbContextWrapper, logger)
         {
+            _questionRepository = questionRepository;
             _mapper = mapper;
             _testRepository = testRepository;
         }
@@ -55,14 +58,17 @@ namespace TestCatalog.Host.Services
             });
         }
 
-        public async Task<TestDto> GetTestAsync(int testId)
+        public async Task<TestResponse> GetTestAsync(int testId)
         {
 
             return await ExecuteSafeAsync(async () =>
             {
-                var result = await _testRepository.GetTestAsync(testId);
-                var mappedResult = _mapper.Map<TestDto>(result);
-                return mappedResult;
+                var test = await _testRepository.GetTestAsync(testId);
+                var questions = await _questionRepository.GetQuestionsForTestAsync(testId);
+                var mappedQuestionst = questions.Select(s => _mapper.Map<QuestionDto>(s)).ToList();
+                var fullTest = new TestResponse() { Id = test.Id, Description = test.Description, Name = test.Name, Questions = new List<QuestionDto>() };
+                fullTest.Questions.AddRange(mappedQuestionst);
+                return fullTest;
             });
         }
 

@@ -11,6 +11,8 @@ public class Program
 
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddAutoMapper(typeof(Program));
+
         builder.Services.AddTransient<ITestService, TestService>();
         builder.Services.AddTransient<IUserTestRepository, UserTestRepository>();
         builder.Services.AddTransient<IUserService, UserService>();

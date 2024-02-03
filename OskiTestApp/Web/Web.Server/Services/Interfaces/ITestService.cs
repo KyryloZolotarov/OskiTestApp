@@ -7,6 +7,6 @@ namespace Web.Server.Services.Interfaces
     {
         Task<TestsNamesViewModel> GetAvailableTests(string userId);
         Task<TestViewModel> GetSelectedTest(int testId);
-        Task<IEnumerable<TestViewModel>> GetPassedTests(string userId);
+        Task<IEnumerable<PassedTestViewModel>> GetPassedTests(string userId);
     }
 }

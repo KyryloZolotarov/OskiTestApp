@@ -1,4 +1,5 @@
-﻿using Web.Server.Models.Requests;
+﻿using AutoMapper;
+using Web.Server.Models.Requests;
 using Web.Server.Repositories.Interfaces;
 using Web.Server.Services.Interfaces;
 using Web.Server.ViewModels;
@@ -9,10 +10,13 @@ namespace Web.Server.Services
     {
         private readonly ITestRepository _testRepository;
         private readonly IUserTestRepository _userTestRepository;
+        private readonly IMapper _mapper;
 
         public TestService(ITestRepository testRepository,
+            IMapper mapper,
             IUserTestRepository userTestRepository)
         {
+            _mapper = mapper;
             _testRepository = testRepository;
             _userTestRepository = userTestRepository;
         }
@@ -34,14 +38,39 @@ namespace Web.Server.Services
             return listTestIdsWithNames;
         }
 
-        public async Task<IEnumerable<TestViewModel>> GetPassedTests(string userId)
+        public async Task<IEnumerable<PassedTestViewModel>> GetPassedTests(string userId)
         {
-            throw new NotImplementedException();
+            var availableTests = await _userTestRepository.GetPassedTestsAsync(userId);
+            var listTestIds = new TestsNamesRequest() { TestIds = new List<int>() };
+            foreach (var test in availableTests)
+            {
+                listTestIds.TestIds.Add(test.TestId);
+            }
+            var result = await _testRepository.GetTestNamesAsync(listTestIds);
+            var resultWithNames = new List<PassedTestViewModel>();
+            foreach (var name in result.Names)
+            {
+                resultWithNames.Add(new PassedTestViewModel() { Name = name.Value, Id = name.Key });
+            }
+            foreach(var test in availableTests)
+            {
+                resultWithNames.First(s =>s.Id == test.TestId).Mark = test.Mark;
+            }
+            return resultWithNames;
         }
 
         public async Task<TestViewModel> GetSelectedTest(int testId)
         {
-            throw new NotImplementedException();
+            var test = await _testRepository.GetSelectedTestAsync(testId);
+            var testView = new TestViewModel()
+            {
+                Name = test.Name,
+                Id = test.Id,
+                Description = test.Description,
+                Questions = new List<QuestionViewModel>()
+            };
+            testView.Questions = test.Questions.Select(s => _mapper.Map<QuestionViewModel>(s)).ToList();
+            return testView;
         }
     }
 }

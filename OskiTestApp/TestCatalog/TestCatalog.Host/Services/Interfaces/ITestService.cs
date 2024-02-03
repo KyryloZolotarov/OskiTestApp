@@ -9,7 +9,7 @@ namespace TestCatalog.Host.Services.Interfaces
         Task AddTestAsync(AddTestRequest test);
         Task UpdateTestAsync(UpdateTestRequest test);
         Task DeleteTestAsync(int testId);
-        Task<TestDto> GetTestAsync(int testId);
+        Task<TestResponse> GetTestAsync(int testId);
         Task<TestsNamesResponse> GetTestsNamesAsync(TestsNamesRequest testsIds);
     }
 }

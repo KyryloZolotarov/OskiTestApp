@@ -20,7 +20,7 @@ namespace TestCatalog.Host.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(TestDto), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(TestResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetTestAsync([FromRoute] int testId)
         {
             var result = await _testService.GetTestAsync(testId);

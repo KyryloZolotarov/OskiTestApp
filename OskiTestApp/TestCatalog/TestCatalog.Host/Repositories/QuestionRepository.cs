@@ -34,6 +34,11 @@ namespace TestCatalog.Host.Repositories
             return await _dbContext.Questions.FirstOrDefaultAsync(h => h.Id == questionId);
         }
 
+        public async Task<IEnumerable<QuestionEntity>> GetQuestionsForTestAsync(int testId)
+        {
+            return await _dbContext.Questions.Where(c => c.Id == testId).ToListAsync(); 
+        }
+
         public async Task UpdateQuestionAsync(QuestionEntity question)
         {
             _dbContext.Questions.Update(question);

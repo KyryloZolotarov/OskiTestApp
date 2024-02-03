@@ -34,7 +34,7 @@ namespace Web.Server.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<TestViewModel>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(IEnumerable<PassedTestViewModel>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetPassedTests([FromQuery] string userId)
         {
             var result = await _testService.GetPassedTests(userId);

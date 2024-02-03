@@ -8,5 +8,6 @@ namespace TestCatalog.Host.Repositories.Interfaces
         Task UpdateQuestionAsync(QuestionEntity question);
         Task DeleteQuestionAsync(QuestionEntity question);
         Task<QuestionEntity> GetQuestionAsync(int questionId);
+        Task<IEnumerable<QuestionEntity>> GetQuestionsForTestAsync(int testId);
     }
 }
