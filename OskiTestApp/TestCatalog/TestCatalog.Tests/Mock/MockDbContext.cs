@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.UnitTests.Mocks
+namespace TestCatalog.Tests.Mock
 {
     public class MockDbContext : DbContext
     {

@@ -7,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.UnitTests.Mocks
+namespace TestCatalog.Tests.Mock
 {
-    public class MockService : BaseDataService<MockDbContext>
+    public class MockBaseDataService : BaseDataService<MockDbContext>
     {
-        public MockService(
+        public MockBaseDataService(
             IDbContextWrapper<MockDbContext> dbContextWrapper,
-            ILogger<MockService> logger)
+            ILogger<MockBaseDataService> logger)
             : base(dbContextWrapper, logger)
         {
         }
