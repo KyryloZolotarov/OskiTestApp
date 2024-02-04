@@ -7,7 +7,7 @@ using UserProfiles.Host.Services.Interfaces;
 
 namespace UserProfiles.Host.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("user")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -17,9 +17,9 @@ namespace UserProfiles.Host.Controllers
             _userService = userService;
         }
 
-        [HttpPost]
+        [HttpPost("new")]
         [ProducesResponseType(typeof(UserDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddUserAsync([FromBody] AddUserRequest user)
+        public async Task<IActionResult> AddUser([FromBody] AddUserRequest user)
         {
             var result = await _userService.AddUserAsync(user);
             return Ok(result);
@@ -41,12 +41,12 @@ namespace UserProfiles.Host.Controllers
             return Ok();
         }
 
-        [HttpPost]
+        [HttpPost("login")]
         [ProducesResponseType(typeof(UserDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> LoginAsync([FromBody] LoginRequest login)
         {
-            var user = _userService.LoginAsynnc(login);
-            return Ok(login);
+            var user = await _userService.LoginAsynnc(login);
+            return Ok(user);
         }
     }
 }

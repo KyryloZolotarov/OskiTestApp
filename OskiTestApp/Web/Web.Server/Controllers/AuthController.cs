@@ -15,6 +15,11 @@ public class AuthController : ControllerBase
 {
     private readonly IUserService _userService;
 
+    public AuthController(IUserService userService)
+    {
+        _userService = userService;
+    }
+
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginViewModel model)
     {
@@ -45,26 +50,11 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> SignUp(AddUserRequest model)
     {
         var user = await _userService.SignUpAsync(model);
-
-        if (user != null)
+        if (string.IsNullOrEmpty(user.Id))
         {
-            var claims = new List<Claim>
-            {
-                new(ClaimTypes.Email, user.Email),
-                new(ClaimTypes.Sid, user.Id),
-                new(ClaimTypes.Name, user.FirstName),
-                new(ClaimTypes.Surname, user.LastName)
-            };
-
-            var claimsIdentity = new ClaimsIdentity(claims, "CookieAuth");
-            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-
-            await HttpContext.SignInAsync("CookieAuth", claimsPrincipal);
-
             return Ok();
         }
-
-        return Unauthorized();
+        return BadRequest();
     }
 
     [HttpPost("logout")]

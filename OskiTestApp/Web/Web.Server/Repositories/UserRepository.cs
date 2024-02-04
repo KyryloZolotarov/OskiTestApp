@@ -20,12 +20,12 @@ namespace Web.Server.Repositories
 
         public async Task<UserDto> LoginAsync(LoginDto login)
         {
-            return await _httpClient.SendAsync<UserDto, LoginDto>($"{_settings.Value.UserProfilesUrl}/Login", HttpMethod.Post, login);
+            return await _httpClient.SendAsync<UserDto, LoginDto>($"{_settings.Value.UserProfilesUrl}/user/login", HttpMethod.Post, login);
         }
 
         public async Task<UserDto> SignUpAsync(AddUserRequest user)
         {
-            return await _httpClient.SendAsync<UserDto, AddUserRequest>($"{_settings.Value.UserProfilesUrl}/AddUser", HttpMethod.Post, user);
+            return await _httpClient.SendAsync<UserDto, AddUserRequest>($"{_settings.Value.UserProfilesUrl}/user/new", HttpMethod.Post, user);
         }
     }
 }

@@ -12,8 +12,8 @@ public class Program
     public static void Main(string[] args)
     {
         var configuration = GetConfiguration();
-
         var builder = WebApplication.CreateBuilder(args);
+        builder.Services.Configure<AppSettings>(configuration);
         builder.Services.AddAutoMapper(typeof(Program));
         builder.Services.AddTransient<ITestService, TestService>();
         builder.Services.AddTransient<IUserTestRepository, UserTestRepository>();
@@ -41,6 +41,7 @@ public class Program
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.Cookie.SameSite = SameSiteMode.None;
                 options.Cookie.Name = "YourAuthCookieName";
+                options.Cookie.HttpOnly = false;
                 // options.ExpireTimeSpan = ...
                 // options.LoginPath = ...
                 // options.LogoutPath = ...

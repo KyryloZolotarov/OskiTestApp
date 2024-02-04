@@ -14,7 +14,6 @@ public class Program
         var configuration = GetConfiguration();
 
         var builder = WebApplication.CreateBuilder(args);
-
         builder.Services.AddAutoMapper(typeof(Program));
 
         builder.Services.AddTransient<IUserService, UserService>();
@@ -28,11 +27,11 @@ public class Program
         builder.Services.AddMemoryCache();
         var app = builder.Build();
 
-        app.UseSwagger()
-            .UseSwaggerUI(setup =>
-            {
-                setup.SwaggerEndpoint($"{configuration["PathBase"]}/swagger/v1/swagger.json", "UserProfile.API V1");
-            });
+        // app.UseSwagger()
+        //     .UseSwaggerUI(setup =>
+        //     {
+        //         setup.SwaggerEndpoint($"{configuration["PathBase"]}/swagger/v1/swagger.json", "UserProfile.API V1");
+        //     });
 
         app.UseRouting();
         app.UseEndpoints(endpoints =>
