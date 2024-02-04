@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using UserProfiles.Host.Data;
 using UserProfiles.Host.Data.Entities;
+using UserProfiles.Host.Models.Requests;
 using UserProfiles.Host.Repositories.Interfaces;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -17,10 +18,11 @@ namespace UserProfiles.Host.Repositories
             _dbContext = dbContextWrapper.DbContext;
         }
 
-        public async Task AddUserAsync(UserEntity user)
+        public async Task<UserEntity> AddUserAsync(UserEntity user)
         {
-            await _dbContext.Users.AddAsync(user);
+            var result = await _dbContext.Users.AddAsync(user);
             await _dbContext.SaveChangesAsync();
+            return result.Entity;
         }
 
         public async Task DeleteUserAsync(UserEntity user)
@@ -32,6 +34,11 @@ namespace UserProfiles.Host.Repositories
         public async Task<UserEntity> GetUserAsync(string userId)
         {
             return await _dbContext.Users.FirstOrDefaultAsync(h => h.Id == userId);
+        }
+
+        public async Task<UserEntity> GetUserByEmailAsync(string email)
+        {
+            return await _dbContext.Users.FirstOrDefaultAsync(h => h.Email == email);
         }
 
         public async Task UpdateUserAsync(UserEntity user)

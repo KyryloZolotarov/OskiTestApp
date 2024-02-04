@@ -2,10 +2,9 @@ using System.Text;
 using IdentityModel.Client;
 using Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
-namespace MVC.Services;
+namespace Infrastructure.Services;
 
 public class HttpClientService : IHttpClientService
 {

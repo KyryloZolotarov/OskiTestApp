@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using UserProfiles.Host.Models.Dtos;
 using UserProfiles.Host.Models.Requests;
 using UserProfiles.Host.Services.Interfaces;
 
@@ -17,11 +18,11 @@ namespace UserProfiles.Host.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(UserDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddUserAsync([FromBody] AddUserRequest user)
         {
-            await _userService.AddUserAsync(user);
-            return Ok();
+            var result = await _userService.AddUserAsync(user);
+            return Ok(result);
         }
 
         [HttpPut]
@@ -38,6 +39,14 @@ namespace UserProfiles.Host.Controllers
         {
             await _userService.DeleteUserAsync(id);
             return Ok();
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(UserDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> LoginAsync([FromBody] LoginRequest login)
+        {
+            var user = _userService.LoginAsynnc(login);
+            return Ok(login);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Infrastructure.Exceptions;
+﻿using AutoMapper;
+using Infrastructure.Exceptions;
 using Infrastructure.Services;
 using Infrastructure.Services.Interfaces;
 using UserProfiles.Host.Data;
@@ -15,17 +16,20 @@ namespace UserProfiles.Host.Services
     {
 
         private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
         public UserService(IUserRepository userRepository,
+            IMapper mapper,
             IDbContextWrapper<ApplicationDbContext> dbContextWrapper,
             ILogger<BaseDataService<ApplicationDbContext>> logger)
             : base(dbContextWrapper, logger)
         {
+            _mapper = mapper;
             _userRepository = userRepository;
         }
 
-        public async Task AddUserAsync(AddUserRequest user)
+        public async Task<UserDto> AddUserAsync(AddUserRequest user)
         {
-            await ExecuteSafeAsync(async () =>
+            return await ExecuteSafeAsync(async () =>
             {
                 var userAdd = new UserEntity()
                 {
@@ -35,7 +39,9 @@ namespace UserProfiles.Host.Services
                     Password = user.Password
                 };
 
-                await _userRepository.AddUserAsync(userAdd);
+                var result = await _userRepository.AddUserAsync(userAdd);
+                var mappedResult = _mapper.Map<UserDto>(result);
+                return mappedResult;
             });
         }
 
@@ -52,6 +58,17 @@ namespace UserProfiles.Host.Services
             {
                 await _userRepository.DeleteUserAsync(userExists);
             });
+        }
+
+        public async Task<UserDto> LoginAsynnc(LoginRequest login)
+        {
+            var userExists = await ExecuteSafeAsync(async () => await _userRepository.GetUserByEmailAsync(login.Email));
+            if (userExists == null)
+            {
+                throw new BusinessException($"User with Email: {login.Email} not found");
+            }
+            var user = _mapper.Map<UserDto>(userExists);
+            return user;
         }
 
         public async Task UpdateUserAsync(UpdateUserRequest user)

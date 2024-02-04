@@ -5,8 +5,9 @@ namespace UserProfiles.Host.Services.Interfaces
 {
     public interface IUserService
     {
-        Task AddUserAsync(AddUserRequest user);
+        Task<UserDto> AddUserAsync(AddUserRequest user);
         Task UpdateUserAsync(UpdateUserRequest user);
         Task DeleteUserAsync(string userId);
+        Task<UserDto> LoginAsynnc(LoginRequest login);
     }
 }

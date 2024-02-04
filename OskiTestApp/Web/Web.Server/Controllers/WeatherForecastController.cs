@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Server.Controllers
 {
     [ApiController]
+    [Authorize("CookieAuth")]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
