@@ -25,17 +25,6 @@ public class HttpClientService : IHttpClientService
             return default!;
         }
 
-        var token = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
-        if (token == null)
-        {
-            return default !;
-        }
-
-        if (!string.IsNullOrEmpty(token))
-        {
-            client.SetBearerToken(token);
-        }
-
         var httpMessage = new HttpRequestMessage();
         httpMessage.RequestUri = new Uri(url);
         httpMessage.Method = method;
@@ -67,13 +56,6 @@ public class HttpClientService : IHttpClientService
         {
             return default!;
         }
-
-        var token = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
-        if (!string.IsNullOrEmpty(token))
-        {
-            client.SetBearerToken(token);
-        }
-
         var httpMessage = new HttpRequestMessage();
         httpMessage.RequestUri = new Uri(url);
         httpMessage.Method = method;
@@ -100,13 +82,6 @@ public class HttpClientService : IHttpClientService
         {
             return;
         }
-
-        var token = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
-        if (!string.IsNullOrEmpty(token))
-        {
-            client.SetBearerToken(token);
-        }
-
         var httpMessage = new HttpRequestMessage();
         httpMessage.RequestUri = new Uri(url);
         httpMessage.Method = method;
@@ -126,12 +101,6 @@ public class HttpClientService : IHttpClientService
         if (_httpContextAccessor.HttpContext == null)
         {
             return;
-        }
-
-        var token = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
-        if (!string.IsNullOrEmpty(token))
-        {
-            client.SetBearerToken(token);
         }
 
         var httpMessage = new HttpRequestMessage();
