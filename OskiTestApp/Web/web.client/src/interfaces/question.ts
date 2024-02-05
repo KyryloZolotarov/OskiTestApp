@@ -1,3 +1,6 @@
 export interface IQuestion {
-    "Question": string,
+    Id: number;
+    Question: string;
+    AnswerVariants: { [key: number]: string };
+    CorrectAnswers: number[];
 }

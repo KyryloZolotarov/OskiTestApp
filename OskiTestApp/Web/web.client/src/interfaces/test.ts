@@ -1,5 +1,7 @@
+import { IQuestion } from "./question";
 export interface ITest {
-    "Name": string,
-    "Description": string,
-    "Questions": []
+    Id: number;
+    Name: string;
+    Description: string;
+    Questions: IQuestion[];
 }

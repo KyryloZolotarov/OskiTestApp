@@ -29,7 +29,7 @@ const Login: React.FC<Authorization> = ({
   const register = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/auth/signup",
+        "http://localhost:5003/auth/signup",
         {
           email,
           firstName,
@@ -56,7 +56,7 @@ const Login: React.FC<Authorization> = ({
   const handleLogin = async (): Promise<void> => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/auth/login",
+        "http://localhost:5003/auth/login",
         {
           email,
           password,
@@ -81,7 +81,7 @@ const Login: React.FC<Authorization> = ({
   const handleLogout = async (): Promise<void> => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/auth/logout",
+        "http://localhost:5003/auth/logout",
         {},
         {
           withCredentials: true,

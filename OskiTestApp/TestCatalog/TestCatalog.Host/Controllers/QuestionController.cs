@@ -6,7 +6,7 @@ using TestCatalog.Host.Services.Interfaces;
 
 namespace TestCatalog.Host.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("question")]
     [ApiController]
     public class QuestionController : ControllerBase
     {

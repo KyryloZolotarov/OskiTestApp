@@ -1,39 +1,31 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { routes as appRoutes } from "./routes";
-import Layout from "./components/Layout/Layout";
-import "./App.css";
-import { AuthProvider } from "./Auth/AuthProvider";
-import { PrivateRoute } from "./components/routes/PrivateRoute";
-function App() {
-  const contents = (
-    <div>
-      <AuthProvider>
-        <Router>
-          <Layout>
-            <Routes>
-              {appRoutes.map((route) => (
-                <Route
-                  key={route.key}
-                  path={route.path}
-                  element={
-                    route.protected ? (
-                      <PrivateRoute>
-                        <route.component />
-                      </PrivateRoute>
-                    ) : (
-                      <route.component />
-                    )
-                  }
-                />
-              ))}
-            </Routes>
-          </Layout>
-        </Router>
-      </AuthProvider>
-    </div>
-  );
+import React from 'react';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import { routes as routeConfig } from './routes';
+import Layout from './components/Layout';
+import { AuthProvider, useAuth } from './Auth/AuthProvider';
 
-  return contents;
-}
+const App: React.FC = () => {
+  const { isAuthenticated } = useAuth();
+
+  return (
+    <AuthProvider>
+      <Routes>
+        {routeConfig.map((route) => (
+          <Route
+            key={route.key}
+            path={route.path}
+            element={
+              route.protected && !isAuthenticated ? (
+                <Navigate to="/login" />
+              ) : (
+                <Layout>{<route.component />}</Layout>
+              )
+            }
+          />
+        ))}
+      </Routes>
+    </AuthProvider>
+  );
+};
 
 export default App;

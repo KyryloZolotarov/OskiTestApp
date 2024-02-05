@@ -1,55 +1,49 @@
-import React, {ReactElement, FC, useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
+import { ITest } from "../../interfaces/test";
+import { IQuestion } from "../../interfaces/question";
+import Question from "./components/Question";
 
-interface TestDto {
-  Id: number;
-  Name: string;
-  Description: string;
-  Questions: QuestionDto[];
-}
+const Test= () => {
+  const location = useLocation();
+  const testId = location.pathname.split('/').pop(); // Получение ID из пути
+  const [questions, setQuestions] = useState<IQuestion[]>([]);
+  const [answers, setAnswers] = useState({});
 
-interface QuestionDto {
-  Id: number;
-  Text: string;
-  // Другие свойства вашего объекта QuestionDto
-}
+  const handleAnswerChange = (questionId: number, answerId: number) => {
+    setAnswers((prevAnswers) => ({ ...prevAnswers, [questionId]: answerId }));
+  };
 
-const YourComponent = () => {
-  const [data, setData] = useState<TestDto | null>(null);
-
-// ...
-
-  const result: TestDto = await response.json();
-  setData(result);
+  const handleSubmit = () => {
+    // Send answers to the server
+    console.log('Submitting answers:', answers);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('your-api-endpoint');
-        const result = await response.json();
-        setData(result);
+        const response = await fetch(`http://localhost:5003/test/gettest?id=${testId}`);
+        const result: ITest = await response.json();
+        setQuestions(result.Questions);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Ошибка при получении данных:', error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [testId]);
 
   return (
     <div>
-      {data && (
-        <div>
-          <p>ID: {data.Id}</p>
-          <p>Name: {data.Name}</p>
-          <p>Description: {data.Description}</p>
-          <ul>
-            {data.Questions.map((question) => (
-              <li key={question.Id}>{question.Text}</li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <h2>{/* Change to questions[0]?.Name or something similar */}</h2>
+      {questions.map((question) => (
+        <Question
+          key={question.Id}
+          question={question}
+          onAnswerChange={handleAnswerChange}
+        />
+      ))}
+      <button onClick={handleSubmit}>Submit Answers</button>
     </div>
   );
 };

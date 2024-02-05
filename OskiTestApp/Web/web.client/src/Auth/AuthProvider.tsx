@@ -1,5 +1,4 @@
-// AuthContext.tsx
-import React, {
+import {
   createContext,
   useState,
   useContext,
@@ -11,6 +10,7 @@ import Cookies from "js-cookie";
 type AuthContextType = {
   isAuthenticated: boolean;
   setIsAuthenticated: (value: boolean) => void;
+  logout: () => Promise<void>; // Изменим тип на Promise<void>
 };
 
 // Создание контекста с пустым начальным состоянием
@@ -22,14 +22,29 @@ type AuthProviderProps = {
 };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // По умолчанию пользователь не залогинен
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const logout = async () => {
+    // Здесь можно добавить логику отправки запроса на бэкенд
+    try {
+      // Ваш код для отправки запроса на бэкенд
+      // Пример: await api.logout();
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+
+    // Очистим токен и установим флаг аутентификации в false
+    Cookies.remove('YourAuthCookieName');
+    setIsAuthenticated(false);
+  };
+
   useEffect(() => {
     const authToken = Cookies.get('YourAuthCookieName');
-    console.log(authToken)
     setIsAuthenticated(!!authToken);
   }, [setIsAuthenticated]);
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, logout }}>
       {children}
     </AuthContext.Provider>
   );

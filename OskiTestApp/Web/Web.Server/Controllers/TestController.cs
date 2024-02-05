@@ -6,7 +6,7 @@ using Web.Server.ViewModels;
 
 namespace Web.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class TestController : ControllerBase
     {
@@ -17,7 +17,7 @@ namespace Web.Server.Controllers
             _testService = testService;
         }
 
-        [HttpGet]
+        [HttpGet("getavailabletests")]
         [ProducesResponseType(typeof(TestsNamesViewModel), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAvailableTests([FromQuery] string userId)
         {
@@ -25,7 +25,7 @@ namespace Web.Server.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
+        [HttpGet("gettest")]
         [ProducesResponseType(typeof(TestViewModel), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetSelectedTest([FromQuery] int testId)
         {
@@ -33,7 +33,7 @@ namespace Web.Server.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
+        [HttpGet("getpassedtests")]
         [ProducesResponseType(typeof(IEnumerable<PassedTestViewModel>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetPassedTests([FromQuery] string userId)
         {

@@ -9,7 +9,7 @@ using TestCatalog.Host.Services.Interfaces;
 
 namespace TestCatalog.Host.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("test")]
     [ApiController]
     public class TestController : ControllerBase
     {
@@ -19,7 +19,7 @@ namespace TestCatalog.Host.Controllers
             _testService = testService;
         }
 
-        [HttpGet]
+        [HttpGet("gettest")]
         [ProducesResponseType(typeof(TestResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetTestAsync([FromRoute] int testId)
         {
@@ -27,7 +27,7 @@ namespace TestCatalog.Host.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
+        [HttpPost("gettestsnames")]
         [ProducesResponseType(typeof(TestsNamesResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetTestsNamesAsync([FromBody] TestsNamesRequest testsIds)
         {

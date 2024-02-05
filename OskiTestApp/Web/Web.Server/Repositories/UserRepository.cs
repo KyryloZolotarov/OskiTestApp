@@ -25,7 +25,7 @@ namespace Web.Server.Repositories
 
         public async Task<UserDto> SignUpAsync(AddUserRequest user)
         {
-            return await _httpClient.SendAsync<UserDto, AddUserRequest>($"{_settings.Value.UserProfilesUrl}/user/new", HttpMethod.Post, user);
+            return await _httpClient.SendAsync<UserDto, AddUserRequest>($"{_settings.Value.UserProfilesUrl}/user/sigup", HttpMethod.Post, user);
         }
     }
 }

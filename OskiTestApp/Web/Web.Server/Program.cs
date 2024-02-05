@@ -37,7 +37,6 @@ public class Program
         builder.Services.AddAuthentication("CookieAuth")
             .AddCookie("CookieAuth", options =>
             {
-                options.Cookie.HttpOnly = true;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.Cookie.SameSite = SameSiteMode.None;
                 options.Cookie.Name = "YourAuthCookieName";

@@ -7,7 +7,7 @@ using UserTest.Host.Services.Interfaces;
 
 namespace UserTest.Host.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("usertest")]
     [ApiController]
     public class UserTestController : ControllerBase
     {
@@ -17,7 +17,7 @@ namespace UserTest.Host.Controllers
             _userTestService = userTestService;
         }
 
-        [HttpGet]
+        [HttpGet("getusertests")]
         [ProducesResponseType(typeof(IEnumerable<UserTestDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetUserTestsAsync([FromQuery] string userId, [FromQuery] bool isTestComleted)
         {
@@ -25,7 +25,7 @@ namespace UserTest.Host.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
+        [HttpPost("addusertests")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddUserAsync([FromBody] AddUserTestRequest userTest)
         {

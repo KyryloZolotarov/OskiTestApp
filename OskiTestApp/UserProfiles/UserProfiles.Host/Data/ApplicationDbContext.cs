@@ -11,7 +11,7 @@ namespace UserProfiles.Host.Data
         {
         }
 
-        public DbSet<UserEntity> Users { get; set; } = null!;
+        public DbSet<UserEntity> UserProfiles { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new UserEntityConfiguration());

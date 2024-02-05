@@ -20,30 +20,30 @@ namespace UserProfiles.Host.Repositories
 
         public async Task<UserEntity> AddUserAsync(UserEntity user)
         {
-            var result = await _dbContext.Users.AddAsync(user);
+            var result = await _dbContext.UserProfiles.AddAsync(user);
             await _dbContext.SaveChangesAsync();
             return result.Entity;
         }
 
         public async Task DeleteUserAsync(UserEntity user)
         {
-            _dbContext.Users.Remove(user);
+            _dbContext.UserProfiles.Remove(user);
             await _dbContext.SaveChangesAsync();
         }
 
         public async Task<UserEntity> GetUserAsync(string userId)
         {
-            return await _dbContext.Users.FirstOrDefaultAsync(h => h.Id == userId);
+            return await _dbContext.UserProfiles.FirstOrDefaultAsync(h => h.Id == userId);
         }
 
         public async Task<UserEntity> GetUserByEmailAsync(string email)
         {
-            return await _dbContext.Users.FirstOrDefaultAsync(h => h.Email == email);
+            return await _dbContext.UserProfiles.FirstOrDefaultAsync(h => h.Email == email);
         }
 
         public async Task UpdateUserAsync(UserEntity user)
         {
-            _dbContext.Users.Update(user);
+            _dbContext.UserProfiles.Update(user);
             await _dbContext.SaveChangesAsync();
         }
     }

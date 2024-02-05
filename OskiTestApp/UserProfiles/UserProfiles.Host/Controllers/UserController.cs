@@ -17,7 +17,7 @@ namespace UserProfiles.Host.Controllers
             _userService = userService;
         }
 
-        [HttpPost("new")]
+        [HttpPost("signup")]
         [ProducesResponseType(typeof(UserDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddUser([FromBody] AddUserRequest user)
         {
