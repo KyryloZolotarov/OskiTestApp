@@ -3,7 +3,7 @@ import { routes as appRoutes } from "./routes";
 import Layout from "./components/Layout/Layout";
 import "./App.css";
 import { AuthProvider } from "./Auth/AuthProvider";
-import { PrivateRoute } from "./components/routes/privateRoute";
+import { PrivateRoute } from "./components/routes/PrivateRoute";
 function App() {
   const contents = (
     <div>

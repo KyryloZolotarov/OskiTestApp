@@ -14,6 +14,7 @@ interface Route {
     title: string,
     path: string,
     enabled: boolean,
+    protected: boolean
     component: FC<any>
 }
 
@@ -21,36 +22,41 @@ export const routes: Array<Route> = [
     {
         key: 'login-route',
         title: 'Login',
-        path: '/',
+        path: '/login',
         enabled: true,
-        component: Login
+        component: Login,
+        protected: false
     },
     {
         key: 'home-route',
         title: 'Home',
-        path: '/index',
+        path: '/',
         enabled: true,
-        component: Home
+        component: Home,
+        protected: true
     },
     {
         key: 'test-route',
         title: 'Test',
         path: '/test',
         enabled: true,
-        component: Test
+        component: Test,
+        protected: true
     },
     {
         key: 'passedtests-route',
         title: 'Passed Tests',
         path: '/passedtests',
         enabled: true,
-        component: PassedTests
+        component: PassedTests,
+        protected: true
     },
     {
         key: 'user-route',
         title: 'User',
         path: '/user',
         enabled: true,
-        component: User
+        component: User,
+        protected: true
     }
 ]
