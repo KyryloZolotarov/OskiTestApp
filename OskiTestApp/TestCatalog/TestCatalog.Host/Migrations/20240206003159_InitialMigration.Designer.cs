@@ -11,7 +11,7 @@ using TestCatalog.Host.Data;
 namespace TestCatalog.Host.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240205223433_InitialMigration")]
+    [Migration("20240206003159_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,6 +22,9 @@ namespace TestCatalog.Host.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.HasSequence("anwser_hilo")
+                .IncrementsBy(10);
 
             modelBuilder.HasSequence("question_hilo")
                 .IncrementsBy(10);
@@ -35,7 +38,7 @@ namespace TestCatalog.Host.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "question_hilo");
+                    SqlServerPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "anwser_hilo");
 
                     b.Property<string>("Answer")
                         .IsRequired()

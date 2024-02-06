@@ -12,7 +12,7 @@ using UserTest.Host.Data;
 namespace UserTest.Host.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240205212958_InitialMigration")]
+    [Migration("20240206003253_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

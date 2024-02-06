@@ -9,6 +9,10 @@ namespace TestCatalog.Host.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateSequence(
+                name: "anwser_hilo",
+                incrementBy: 10);
+
+            migrationBuilder.CreateSequence(
                 name: "question_hilo",
                 incrementBy: 10);
 
@@ -89,6 +93,9 @@ namespace TestCatalog.Host.Migrations
 
             migrationBuilder.DropTable(
                 name: "Test");
+
+            migrationBuilder.DropSequence(
+                name: "anwser_hilo");
 
             migrationBuilder.DropSequence(
                 name: "question_hilo");
