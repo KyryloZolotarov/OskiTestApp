@@ -11,7 +11,7 @@ using UserProfiles.Host.Data;
 namespace UserProfiles.Host.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240206003422_InitialMigration")]
+    [Migration("20240206015221_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

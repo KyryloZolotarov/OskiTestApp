@@ -22,9 +22,9 @@ public class DbInitializer
     {
         return new List<UserTestEntity>
         {
-            new() { UserId = "3808e841-ee4e-46a9-8f33-75d9d44acbbd", TestId = 1 },
-            new() { UserId = "3808e841-ee4e-46a9-8f33-75d9d44acbbd", TestId = 2 },
-            new() { UserId = "3808e841-ee4e-46a9-8f33-75d9d44acbbd", TestId = 3 }
+            new() { UserId = "ab82536f-b0ce-4b9f-9333-9ccd53334c80", TestId = 1 },
+            new() { UserId = "ab82536f-b0ce-4b9f-9333-9ccd53334c80", TestId = 2 },
+            new() { UserId = "ab82536f-b0ce-4b9f-9333-9ccd53334c80", TestId = 3 }
         };
     }
 }

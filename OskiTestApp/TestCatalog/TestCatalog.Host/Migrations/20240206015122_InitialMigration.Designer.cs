@@ -11,7 +11,7 @@ using TestCatalog.Host.Data;
 namespace TestCatalog.Host.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240206003159_InitialMigration")]
+    [Migration("20240206015122_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

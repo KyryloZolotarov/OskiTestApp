@@ -45,6 +45,7 @@ const Login: React.FC<Authorization> = ({
                 console.log("Sign up successful");
                 onLogin();
                 navigate(`/`);
+                setAccountExist(true);
                 // Перенаправить пользователя или изменить состояние аутентификации
             }
         } catch (error) {
@@ -92,7 +93,7 @@ const Login: React.FC<Authorization> = ({
                 console.log("Logout successful");
                 onLogout();
                 setAccountExist(accountExist);
-                navigate("/");
+                navigate("/login");
                 // Перенаправить пользователя или изменить состояние аутентификации
             }
         } catch (error) {

@@ -26,7 +26,7 @@ public class UserRepository : IUserRepository
 
     public async Task<UserDto> SignUpAsync(AddUserRequest user)
     {
-        return await _httpClient.SendAsync<UserDto, AddUserRequest>($"{_settings.Value.UserProfilesUrl}/user/sigup",
+        return await _httpClient.SendAsync<UserDto, AddUserRequest>($"{_settings.Value.UserProfilesUrl}/user/signup",
             HttpMethod.Post, user);
     }
 }
