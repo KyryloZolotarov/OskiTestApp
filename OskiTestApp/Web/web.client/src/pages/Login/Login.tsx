@@ -1,7 +1,8 @@
-import React, {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import {useAuth} from "../../Auth/AuthProvider";
+import { useAuth } from "../../Auth/AuthProvider";
+import { Typography, TextField, Button, Container } from '@mui/material';
 
 interface Authorization {
     onLogin: () => void;
@@ -10,17 +11,17 @@ interface Authorization {
 }
 
 const Login: React.FC<Authorization> = ({
-                                            onLogin,
-                                            onLogout,
-                                            accountExist,
-                                        }) => {
+    onLogin,
+    onLogout,
+    accountExist,
+}) => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [firstName, setFirstName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
     const [localAccountExist, setAccountExist] = useState<boolean>(true);
     const navigate = useNavigate();
-    const {setIsAuthenticated} = useAuth();
+    const { setIsAuthenticated } = useAuth();
 
     const handleSignUp = async () => {
         setAccountExist(false);
@@ -46,11 +47,9 @@ const Login: React.FC<Authorization> = ({
                 onLogin();
                 navigate(`/`);
                 setAccountExist(true);
-                // Перенаправить пользователя или изменить состояние аутентификации
             }
         } catch (error) {
             console.error("Sign Up failed", error);
-            // Обработать ошибку логина
         }
     };
 
@@ -71,11 +70,9 @@ const Login: React.FC<Authorization> = ({
                 console.log("Login successful");
                 setIsAuthenticated(true);
                 navigate(`/`);
-                // Перенаправить пользователя или изменить состояние аутентификации
             }
         } catch (error) {
             console.error("Login failed", error);
-            // Обработать ошибку логина
         }
     };
 
@@ -94,66 +91,72 @@ const Login: React.FC<Authorization> = ({
                 onLogout();
                 setAccountExist(accountExist);
                 navigate("/login");
-                // Перенаправить пользователя или изменить состояние аутентификации
             }
         } catch (error) {
             console.error("Logout failed", error);
-            // Обработать ошибку логаута
         }
     };
 
     return (
-        <div>
-            {localAccountExist ? (
-                <>
-                    <p>
-                        <em>Please log in to start</em>
-                    </p>
-                    <input
-                        type="text"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Email"
-                    />
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Password"
-                    />
-                    <button onClick={handleLogin}>Login</button>
-                    <button onClick={handleSignUp}>Sign Up</button>
-                </>
-            ) : (
-                <>
-                    <input
-                        type="text"
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                        placeholder="First Name"
-                    />
-                    <input
-                        type="text"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                        placeholder="Last Name"
-                    />
-                    <input
-                        type="text"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Email"
-                    />
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Password"
-                    />
-                    <button onClick={register}>Sign Up</button>
-                </>
-            )}
-        </div>
+        <Container maxWidth="sm" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+                {localAccountExist ? (
+                    <>
+                        <Typography variant="h6"><em>Please log in to start</em></Typography>
+                        <TextField
+                            type="text"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Email"
+                            style={{ backgroundColor: '#FFFFFF' }} // светлый фон
+                        />
+                        <TextField
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Password"
+                            style={{ backgroundColor: '#FFFFFF' }} // светлый фон
+                        />
+                        <div style={{ display: "flex", gap: "10px" }}>
+                        <Button onClick={handleLogin} variant="contained" style={{ backgroundColor: '#284d66', color: '#FFFFFF' }}>Login</Button>
+                        <Button onClick={handleSignUp} variant="contained" style={{ backgroundColor: '#284d66', color: '#FFFFFF' }}>Sign Up</Button>
+                        </div>                        
+                    </>
+                ) : (
+                    <>
+                        <TextField
+                            type="text"
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                            placeholder="First Name"
+                            style={{ backgroundColor: '#FFFFFF' }} // светлый фон
+                        />
+                        <TextField
+                            type="text"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                            placeholder="Last Name"
+                            style={{ backgroundColor: '#FFFFFF' }} // светлый фон
+                        />
+                        <TextField
+                            type="text"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Email"
+                            style={{ backgroundColor: '#FFFFFF' }} // светлый фон
+                        />
+                        <TextField
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Password"
+                            style={{ backgroundColor: '#FFFFFF' }} // светлый фон
+                        />
+                        <Button onClick={register} variant="contained" style={{ backgroundColor: '#284d66', color: '#FFFFFF' }}>Sign Up</Button> {/* темный фон, белый текст */}
+                    </>
+                )}
+            </div>
+        </Container>
     );
 };
 

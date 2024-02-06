@@ -1,22 +1,31 @@
 import React from 'react';
+import { FormControl, FormGroup, FormControlLabel, Checkbox, Box } from '@mui/material';
 
 interface AnswerProps {
     answerId: string;
     answerText: string;
-    onAnswerChange: () => void; // Adjust the type according to your needs
+    onAnswerChange: () => void;
 }
 
-const Answer: React.FC<AnswerProps> = ({answerId, answerText, onAnswerChange}) => {
+const Answer: React.FC<AnswerProps> = ({ answerId, answerText, onAnswerChange }) => {
     return (
-        <div>
-            <input
-                type="radio"
-                id={answerId}
-                name={`answer-${answerId}`}
-                onChange={onAnswerChange}
-            />
-            <label htmlFor={answerId}>{answerText}</label>
-        </div>
+        <Box marginBottom={1}>
+            <FormControl component="fieldset">
+                <FormGroup>
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                color="success"
+                                onChange={onAnswerChange}
+                                id={answerId}
+                                name={`answer-${answerId}`}
+                            />
+                        }
+                        label={answerText}
+                    />
+                </FormGroup>
+            </FormControl>
+        </Box>
     );
 };
 

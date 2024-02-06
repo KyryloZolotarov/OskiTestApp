@@ -36,8 +36,9 @@ public class TestController : ControllerBase
 
     [HttpGet("getPassedTests")]
     [ProducesResponseType(typeof(IEnumerable<PassedTestViewModel>), (int)HttpStatusCode.OK)]
-    public async Task<IActionResult> GetPassedTests([FromQuery] string userId)
+    public async Task<IActionResult> GetPassedTests()
     {
+        var userId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value;
         var result = await _testService.GetPassedTests(userId);
         return Ok(result);
     }
