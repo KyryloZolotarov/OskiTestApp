@@ -2,14 +2,14 @@
 using TestCatalog.Host.Data.Entities;
 using TestCatalog.Host.Models.Dtos;
 
-namespace TestCatalog.Host.Mapping
+namespace TestCatalog.Host.Mapping;
+
+public class MappingProfile : Profile
 {
-    public class MappingProfile : Profile
+    public MappingProfile()
     {
-        public MappingProfile()
-        {
-            CreateMap<QuestionDto, QuestionEntity>().ReverseMap();
-            CreateMap<TestDto, TestEntity>().ReverseMap();
-        }
+        CreateMap<QuestionDto, QuestionEntity>().ReverseMap();
+        CreateMap<TestDto, TestEntity>().ReverseMap();
+        CreateMap<AnswerDto, AnswerEntity>().ReverseMap();
     }
 }

@@ -1,9 +1,9 @@
 import {
   createContext,
-  useState,
-  useContext,
   ReactNode,
+  useContext,
   useEffect,
+  useState,
 } from "react";
 import Cookies from "js-cookie";
 // Определение типа для состояния и функций контекста
@@ -23,7 +23,7 @@ type AuthProviderProps = {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(true);
   const logout = async () => {
     // Здесь можно добавить логику отправки запроса на бэкенд
     try {
@@ -34,17 +34,28 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
 
     // Очистим токен и установим флаг аутентификации в false
-    Cookies.remove('YourAuthCookieName');
+    Cookies.remove("YourAuthCookieName");
     setIsAuthenticated(false);
   };
 
   useEffect(() => {
-    const authToken = Cookies.get('YourAuthCookieName');
-    setIsAuthenticated(!!authToken);
-  }, [setIsAuthenticated]);
+    const checkAuth = async () => {
+      const authToken = Cookies.get("YourAuthCookieName");
+      setIsAuthenticated(!!authToken);
+      setIsLoading(false); // Set loading to false after checking auth token
+    };
+
+    checkAuth();
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>; // or some loading spinner
+  }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, logout }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, setIsAuthenticated, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -1,7 +1,5 @@
 using System.Text;
-using IdentityModel.Client;
 using Infrastructure.Services.Interfaces;
-using Microsoft.AspNetCore.Authentication;
 using Newtonsoft.Json;
 
 namespace Infrastructure.Services;
@@ -20,19 +18,15 @@ public class HttpClientService : IHttpClientService
     public async Task<TResponse> SendAsync<TResponse, TRequest>(string url, HttpMethod method, TRequest? content)
     {
         var client = _clientFactory.CreateClient();
-        if (_httpContextAccessor.HttpContext == null)
-        {
-            return default!;
-        }
+        if (_httpContextAccessor.HttpContext == null) return default!;
 
         var httpMessage = new HttpRequestMessage();
         httpMessage.RequestUri = new Uri(url);
         httpMessage.Method = method;
 
         if (content != null)
-        {
-            httpMessage.Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
-        }
+            httpMessage.Content =
+                new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
 
         var result = await client.SendAsync(httpMessage);
 
@@ -40,10 +34,7 @@ public class HttpClientService : IHttpClientService
         {
             var resultContent = await result.Content.ReadAsStringAsync();
             var response = JsonConvert.DeserializeObject<TResponse>(resultContent);
-            if (response != null)
-            {
-                return response;
-            }
+            if (response != null) return response;
         }
 
         return default !;
@@ -52,10 +43,7 @@ public class HttpClientService : IHttpClientService
     public async Task<TResponse> SendAsync<TResponse>(string url, HttpMethod method)
     {
         var client = _clientFactory.CreateClient();
-        if (_httpContextAccessor.HttpContext == null)
-        {
-            return default!;
-        }
+        if (_httpContextAccessor.HttpContext == null) return default!;
         var httpMessage = new HttpRequestMessage();
         httpMessage.RequestUri = new Uri(url);
         httpMessage.Method = method;
@@ -66,10 +54,7 @@ public class HttpClientService : IHttpClientService
         {
             var resultContent = await result.Content.ReadAsStringAsync();
             var response = JsonConvert.DeserializeObject<TResponse>(resultContent);
-            if (response != null)
-            {
-                return response;
-            }
+            if (response != null) return response;
         }
 
         return default!;
@@ -78,19 +63,14 @@ public class HttpClientService : IHttpClientService
     public async Task SendAsync<TRequest>(string url, HttpMethod method, TRequest? content)
     {
         var client = _clientFactory.CreateClient();
-        if (_httpContextAccessor.HttpContext == null)
-        {
-            return;
-        }
+        if (_httpContextAccessor.HttpContext == null) return;
         var httpMessage = new HttpRequestMessage();
         httpMessage.RequestUri = new Uri(url);
         httpMessage.Method = method;
 
         if (content != null)
-        {
             httpMessage.Content =
                 new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
-        }
 
         var result = await client.SendAsync(httpMessage);
     }
@@ -98,10 +78,7 @@ public class HttpClientService : IHttpClientService
     public async Task SendAsync(string url, HttpMethod method)
     {
         var client = _clientFactory.CreateClient();
-        if (_httpContextAccessor.HttpContext == null)
-        {
-            return;
-        }
+        if (_httpContextAccessor.HttpContext == null) return;
 
         var httpMessage = new HttpRequestMessage();
         httpMessage.RequestUri = new Uri(url);

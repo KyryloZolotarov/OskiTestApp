@@ -1,6 +1,6 @@
-import { fileURLToPath, URL } from 'node:url';
+import {fileURLToPath, URL} from 'node:url';
 import 'vite-plugin-define';
-import { defineConfig } from 'vite';
+import {defineConfig} from 'vite';
 import plugin from '@vitejs/plugin-react';
 import fs from 'fs';
 import path from 'path';
@@ -31,7 +31,7 @@ if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
         '--format',
         'Pem',
         '--no-password',
-    ], { stdio: 'inherit', }).status) {
+    ], {stdio: 'inherit',}).status) {
         throw new Error("Could not create certificate.");
     }
 }

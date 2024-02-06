@@ -1,55 +1,64 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 interface TestData {
-  Names: {
-    [key: number]: string;
-  };
+    names: {
+        [key: number]: string;
+    };
 }
 
 const Home = () => {
-  const [testsData, setTestsData] = useState<TestData | null>(null);
-  const [selectedTest, setSelectedTest] = useState<number | null>(null);
-  const navigate = useNavigate();
+    const [testsData, setTestsData] = useState<TestData | null>(null);
+    const [selectedTest, setSelectedTest] = useState<number | null>(null);
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    // Запрос к серверу для получения реальных данных
-    fetch('/api/tests')
-      .then((response) => response.json())
-      .then((data: TestData) => setTestsData(data))
-      .catch((error) => console.error('Ошибка при загрузке данных', error));
-  }, []);
+    useEffect(() => {
+        // Запрос к серверу для получения реальных данных
+        fetch("http://localhost:5003/test/getAvailableTests", {
+            method: "GET", // or 'POST'
+            headers: {
+                "Content-Type": "application/json",
+                // other headers can go here
+            },
+            credentials: "include", // Important: this will send cookies with your request
+        })
+            .then((response) => response.json())
+            .then((data) => setTestsData(data)) // Assuming setTestsData is your state setter
+            .catch((error) => console.error("Ошибка при загрузке данных", error));
+    }, []);
 
-  const handleTestSelect = (testId: number) => {
-    setSelectedTest(testId);
-    navigate(`/tests/${testId}`);
-  };
+    const handleTestSelect = (testId: number) => {
+        setSelectedTest(testId);
+        navigate(`/test/${testId}`);
+    };
 
-  return (
-    <div>
-      <h1>Список тестов</h1>
-      {testsData ? (
-        <ul>
-          {Object.keys(testsData.Names).map((testId) => (
-            <li key={testId}>
-              <button onClick={() => handleTestSelect(Number(testId))}>
-                {testsData.Names[Number(testId)]}
-              </button>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Загрузка данных...</p>
-      )}
-
-      {selectedTest && testsData && (
+    return (
         <div>
-          <h2>Выбранный тест: {testsData.Names[selectedTest]}</h2>
-          {/* Здесь можно добавить дополнительную информацию о выбранном тесте */}
+            <h1>Список тестов</h1>
+            {testsData ? (
+                <ul>
+                    {testsData &&
+                        testsData.names &&
+                        Object.keys(testsData.names).map((testId) => (
+                            <li key={testId}>
+                                <button onClick={() => handleTestSelect(Number(testId))}>
+                                    {testsData.names[testId]}
+                                </button>
+                            </li>
+                        ))}
+                </ul>
+            ) : (
+                <p>Загрузка данных...</p>
+            )}
+
+            {selectedTest && testsData && (
+                <div>
+                    <h2>Выбранный тест: {testsData.Names[selectedTest]}</h2>
+                    {/* Здесь можно добавить дополнительную информацию о выбранном тесте */}
+                </div>
+            )}
         </div>
-      )}
-    </div>
-  );
+    );
 };
 
 export default Home;

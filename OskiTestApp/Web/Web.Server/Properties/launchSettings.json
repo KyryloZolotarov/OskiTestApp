@@ -17,7 +17,9 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy",
-        "UserProfilesUrl": "http://localhost:5001"
+        "UserProfilesUrl": "http://localhost:5001",
+        "UserTestUrl": "http://localhost:5004",
+        "TestCatalogUrl": "http://localhost:5002"
       }
     },
     "https": {

@@ -1,10 +1,9 @@
-﻿namespace UserProfiles.Host.Data
+﻿namespace UserProfiles.Host.Data;
+
+public class DbInitializer
 {
-    public class DbInitializer
-    {        
-        public static async Task Initialize(ApplicationDbContext context)
-        {
-            await context.Database.EnsureCreatedAsync();
-        }
+    public static async Task Initialize(ApplicationDbContext context)
+    {
+        await context.Database.EnsureCreatedAsync();
     }
 }

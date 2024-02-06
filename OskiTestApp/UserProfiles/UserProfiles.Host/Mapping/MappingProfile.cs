@@ -2,13 +2,12 @@
 using UserProfiles.Host.Data.Entities;
 using UserProfiles.Host.Models.Dtos;
 
-namespace UserProfiles.Host.Mapping
+namespace UserProfiles.Host.Mapping;
+
+public class MappingProfile : Profile
 {
-    public class MappingProfile : Profile
+    public MappingProfile()
     {
-        public MappingProfile()
-        {
-            CreateMap<UserDto, UserEntity>().ReverseMap();
-        }
+        CreateMap<UserDto, UserEntity>().ReverseMap();
     }
 }

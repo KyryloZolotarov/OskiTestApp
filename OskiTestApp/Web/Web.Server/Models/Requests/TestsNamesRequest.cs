@@ -1,7 +1,6 @@
-﻿namespace Web.Server.Models.Requests
+﻿namespace Web.Server.Models.Requests;
+
+public class TestsNamesRequest
 {
-    public class TestsNamesRequest
-    {
-        public List<int> TestIds { get; set; }
-    }
+    public List<int> TestIds { get; set; }
 }

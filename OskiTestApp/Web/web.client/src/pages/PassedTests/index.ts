@@ -1,1 +1,1 @@
-export { default } from './PassedTests'
+export {default} from './PassedTests'

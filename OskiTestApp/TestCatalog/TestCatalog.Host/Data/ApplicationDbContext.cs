@@ -2,23 +2,24 @@
 using TestCatalog.Host.Data.Entities;
 using TestCatalog.Host.Data.EntityConfigurations;
 
+namespace TestCatalog.Host.Data;
 
-namespace TestCatalog.Host.Data
+public class ApplicationDbContext : DbContext
 {
-    public class ApplicationDbContext : DbContext
-    {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
-        {
-        }
+    {
+    }
 
-        public DbSet<QuestionEntity> Questions { get; set; } = null!;
-        public DbSet<TestEntity> Tests { get; set; } = null!;
+    public DbSet<QuestionEntity> Questions { get; set; } = null!;
+    public DbSet<TestEntity> Tests { get; set; } = null!;
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            builder.ApplyConfiguration(new QuestionEntityConfiguration());
-            builder.ApplyConfiguration(new TestEntityConfiguration());
-        }
+    public DbSet<AnswerEntity> Answers { get; set; } = null!;
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        builder.ApplyConfiguration(new TestEntityConfiguration());
+        builder.ApplyConfiguration(new QuestionEntityConfiguration());
+        builder.ApplyConfiguration(new AnswerEntityConfiguration());
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System.Security.Claims;
-using System.Security.Cryptography;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using Web.Server.Models;
 using Web.Server.Models.Requests;
 using Web.Server.Services.Interfaces;
 using Web.Server.ViewModels;
@@ -50,10 +48,7 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> SignUp(AddUserRequest model)
     {
         var user = await _userService.SignUpAsync(model);
-        if (string.IsNullOrEmpty(user.Id))
-        {
-            return Ok();
-        }
+        if (string.IsNullOrEmpty(user.Id)) return Ok();
         return BadRequest();
     }
 

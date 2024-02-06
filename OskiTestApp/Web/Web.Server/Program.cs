@@ -71,7 +71,7 @@ public class Program
             endpoints.MapDefaultControllerRoute();
             endpoints.MapControllers();
         });
-        
+
         app.Run();
 
         IConfiguration GetConfiguration()

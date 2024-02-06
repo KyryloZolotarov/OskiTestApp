@@ -1,7 +1,6 @@
-﻿namespace TestCatalog.Host.Models.Responses
+﻿namespace TestCatalog.Host.Models.Responses;
+
+public class TestsNamesResponse
 {
-    public class TestsNamesResponse
-    {
-        public Dictionary<int, string> Names { get; set; }
-    }
+    public Dictionary<int, string> Names { get; set; }
 }

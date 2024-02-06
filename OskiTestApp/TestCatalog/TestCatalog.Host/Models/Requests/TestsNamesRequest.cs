@@ -1,7 +1,6 @@
-﻿namespace TestCatalog.Host.Models.Requests
+﻿namespace TestCatalog.Host.Models.Requests;
+
+public class TestsNamesRequest
 {
-    public class TestsNamesRequest
-    {
-        public List<int> TestIds { get; set; }
-    }
+    public List<int> TestIds { get; set; }
 }

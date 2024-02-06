@@ -28,11 +28,11 @@ public class Program
         builder.Services.AddMemoryCache();
         var app = builder.Build();
 
-        app.UseSwagger()
-            .UseSwaggerUI(setup =>
-            {
-                setup.SwaggerEndpoint($"{configuration["PathBase"]}/swagger/v1/swagger.json", "UserTest.API V1");
-            });
+        // app.UseSwagger()
+        //     .UseSwaggerUI(setup =>
+        //     {
+        //         setup.SwaggerEndpoint($"{configuration["PathBase"]}/swagger/v1/swagger.json", "UserTest.API V1");
+        //     });
 
         app.UseRouting();
         app.UseEndpoints(endpoints =>

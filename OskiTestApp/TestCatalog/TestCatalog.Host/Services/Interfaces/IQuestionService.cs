@@ -1,13 +1,10 @@
-﻿
-using TestCatalog.Host.Models.Dtos;
-using TestCatalog.Host.Models.Requests;
+﻿using TestCatalog.Host.Models.Requests;
 
-namespace TestCatalog.Host.Services.Interfaces
+namespace TestCatalog.Host.Services.Interfaces;
+
+public interface IQuestionService
 {
-    public interface IQuestionService
-    {
-        Task AddQuestionAsync(AddQuestionRequest question);
-        Task UpdateQuestionAsync(UpdateQuestionRequest question);
-        Task DeleteQuestionAsync(int questionId);
-    }
+    Task AddQuestionAsync(AddQuestionRequest question);
+    Task UpdateQuestionAsync(UpdateQuestionRequest question);
+    Task DeleteQuestionAsync(int questionId);
 }

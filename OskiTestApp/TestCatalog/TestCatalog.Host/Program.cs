@@ -1,12 +1,11 @@
-using Infrastructure.Services.Interfaces;
 using Infrastructure.Services;
+using Infrastructure.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using TestCatalog.Host.Data;
-using Microsoft.AspNetCore.Cors.Infrastructure;
+using TestCatalog.Host.Repositories;
 using TestCatalog.Host.Repositories.Interfaces;
 using TestCatalog.Host.Services;
 using TestCatalog.Host.Services.Interfaces;
-using TestCatalog.Host.Repositories;
 
 public class Program
 {
@@ -22,7 +21,7 @@ public class Program
         builder.Services.AddTransient<ITestRepository, TestRepository>();
         builder.Services.AddTransient<IQuestionService, QuestionService>();
         builder.Services.AddTransient<IQuestionRepository, QuestionRepository>();
-
+        builder.Services.AddTransient<IAnswerRepository, AnswerRepository>();
         builder.Services.AddDbContextFactory<ApplicationDbContext>(opts =>
             opts.UseSqlServer(configuration["ConnectionString"]));
         builder.Services.AddScoped<IDbContextWrapper<ApplicationDbContext>, DbContextWrapper<ApplicationDbContext>>();
@@ -31,11 +30,11 @@ public class Program
         builder.Services.AddMemoryCache();
         var app = builder.Build();
 
-        app.UseSwagger()
-            .UseSwaggerUI(setup =>
-            {
-                setup.SwaggerEndpoint($"{configuration["PathBase"]}/swagger/v1/swagger.json", "TestCatalog.API V1");
-            });
+        // app.UseSwagger()
+        //     .UseSwaggerUI(setup =>
+        //     {
+        //         setup.SwaggerEndpoint($"{configuration["PathBase"]}/swagger/v1/swagger.json", "TestCatalog.API V1");
+        //     });
 
         app.UseRouting();
         app.UseEndpoints(endpoints =>

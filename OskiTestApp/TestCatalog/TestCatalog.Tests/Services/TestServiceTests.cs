@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace TestCatalog.Tests.Services;
 
-namespace TestCatalog.Tests.Services
+public class TestServiceTests
 {
-    public class TestServiceTests
-    {
-    }
 }

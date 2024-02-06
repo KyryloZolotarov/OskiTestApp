@@ -1,18 +1,16 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Web.Server.Services.Interfaces;
 
-namespace Web.Server.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UserController : ControllerBase
-    {
-        private readonly IUserService _userService;
+namespace Web.Server.Controllers;
 
-        public UserController(IUserService userService) 
-        { 
-            _userService = userService;
-        }
+[Route("api/[controller]")]
+[ApiController]
+public class UserController : ControllerBase
+{
+    private readonly IUserService _userService;
+
+    public UserController(IUserService userService)
+    {
+        _userService = userService;
     }
 }

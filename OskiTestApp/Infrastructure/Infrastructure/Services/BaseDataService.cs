@@ -22,12 +22,14 @@ public abstract class BaseDataService<T>
         return ExecuteSafeAsync(token => action(), cancellationToken);
     }
 
-    protected Task<TResult> ExecuteSafeAsync<TResult>(Func<Task<TResult>> action, CancellationToken cancellationToken = default)
+    protected Task<TResult> ExecuteSafeAsync<TResult>(Func<Task<TResult>> action,
+        CancellationToken cancellationToken = default)
     {
         return ExecuteSafeAsync(token => action(), cancellationToken);
     }
 
-    private async Task ExecuteSafeAsync(Func<CancellationToken, Task> action, CancellationToken cancellationToken = default)
+    private async Task ExecuteSafeAsync(Func<CancellationToken, Task> action,
+        CancellationToken cancellationToken = default)
     {
         await using var transaction = await _dbContextWrapper.BeginTransactionAsync(cancellationToken);
 
@@ -44,7 +46,8 @@ public abstract class BaseDataService<T>
         }
     }
 
-    private async Task<TResult> ExecuteSafeAsync<TResult>(Func<CancellationToken, Task<TResult>> action, CancellationToken cancellationToken = default)
+    private async Task<TResult> ExecuteSafeAsync<TResult>(Func<CancellationToken, Task<TResult>> action,
+        CancellationToken cancellationToken = default)
     {
         await using var transaction = await _dbContextWrapper.BeginTransactionAsync(cancellationToken);
 

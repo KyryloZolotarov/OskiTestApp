@@ -1,7 +1,6 @@
-﻿namespace Web.Server.Models.Dtos
+﻿namespace Web.Server.Models.Dtos;
+
+public class TestsNamesDto
 {
-    public class TestsNamesDto
-    {
-        public Dictionary<int, string> Names { get; set; }
-    }
+    public Dictionary<int, string> Names { get; set; }
 }
