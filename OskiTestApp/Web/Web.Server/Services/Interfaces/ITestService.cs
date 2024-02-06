@@ -7,4 +7,5 @@ public interface ITestService
     Task<TestsNamesViewModel> GetAvailableTests(string userId);
     Task<TestViewModel> GetSelectedTest(int testId);
     Task<IEnumerable<PassedTestViewModel>> GetPassedTests(string userId);
+    Task SubmitAnswersAsync(string userId, UserTestViewModel complitedTest);
 }

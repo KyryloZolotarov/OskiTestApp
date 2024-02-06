@@ -71,6 +71,19 @@ public class TestService : BaseDataService<ApplicationDbContext>, ITestService
                 question.AnswerVariants = new Dictionary<int, string>(mappedAnswers
                     .Where(x => x.QuestionId == question.Id)
                     .Select(y => new KeyValuePair<int, string>(y.Id, y.Answer)));
+
+            foreach(var question in fullTest.Questions)
+            {
+                question.CorrectAnswers = new List<int>();
+                foreach(var answer in question.AnswerVariants)
+                {
+                    var temp = answers.First(s => s.Id == answer.Key);
+                    if(temp.isCorrect == true)
+                    {
+                        question.CorrectAnswers.Add(temp.Id);
+                    }
+                }
+            }
             return fullTest;
         });
     }

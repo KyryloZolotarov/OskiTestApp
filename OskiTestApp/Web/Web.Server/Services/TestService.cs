@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Web.Server.Models.Dtos;
 using Web.Server.Models.Requests;
 using Web.Server.Repositories.Interfaces;
 using Web.Server.Services.Interfaces;
@@ -63,5 +64,35 @@ public class TestService : ITestService
             CorrectAnswersCount = 0
         }));
         return testView;
+    }
+
+    public async Task SubmitAnswersAsync(string userId, UserTestViewModel complitedTest)
+    {
+        var test = await _testRepository.GetSelectedTestAsync(complitedTest.TestId);
+        var userTestAdd = new UserTestDto();
+        userTestAdd.UserId = userId;
+        userTestAdd.TestId = complitedTest.TestId;
+        var answersDictionary = new Dictionary<int, List<int>>(complitedTest.Answers.Select(l => new KeyValuePair<int, List<int>>(l.QuiestionId, l.AnswersKeys)));
+        var answersCount = 0;
+        var correctAnswersCount = 0;
+        test.QuestionsCorrectAnswers = new Dictionary<int, List<int>>();
+        foreach(var question in test.Questions)
+        {
+            test.QuestionsCorrectAnswers.Add(question.Id, question.CorrectAnswers);
+        }
+        foreach (var question in test.QuestionsCorrectAnswers)
+        {
+            answersCount += question.Value.Count();
+            if(answersDictionary.TryGetValue(question.Key, out var answer))
+            {
+                 correctAnswersCount += question.Value.Intersect(answer).Count();
+            }
+        }
+        float temp = ((float) correctAnswersCount / (float) answersCount);
+        temp = temp * 100;
+        userTestAdd.Mark = (int)temp;
+        userTestAdd.IsTestCompleted = true;
+
+        await _userTestRepository.SubmitAnswersAsync(userTestAdd);
     }
 }

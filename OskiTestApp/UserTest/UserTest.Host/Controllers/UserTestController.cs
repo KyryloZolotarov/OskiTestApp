@@ -25,15 +25,15 @@ public class UserTestController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost("addusertests")]
+    [HttpPost("addUserTest")]
     [ProducesResponseType((int)HttpStatusCode.OK)]
-    public async Task<IActionResult> AddUserAsync([FromBody] AddUserTestRequest userTest)
+    public async Task<IActionResult> AddUserTestAsync([FromBody] AddUserTestRequest userTest)
     {
         await _userTestService.AddUserTestAsync(userTest);
         return Ok();
     }
 
-    [HttpPut]
+    [HttpPut("updateUserTest")]
     [ProducesResponseType((int)HttpStatusCode.OK)]
     public async Task<IActionResult> UpdateUserTestAsync([FromBody] UpdateUserTestRequest userTest)
     {

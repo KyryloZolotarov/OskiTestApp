@@ -29,4 +29,11 @@ public class UserTestRepository : IUserTestRepository
             $"{_settings.Value.UserTestUrl}/usertest/GetUserTests?userId={userId}&isTestComleted={true}",
             HttpMethod.Get);
     }
+
+    public Task SubmitAnswersAsync(UserTestDto userTest)
+    {
+        return _httpClient.SendAsync<UserTestDto>(
+            $"{_settings.Value.UserTestUrl}/usertest/UpdateUserTest",
+            HttpMethod.Put, userTest);
+    }
 }

@@ -32,7 +32,6 @@ public class UserTestService : BaseDataService<ApplicationDbContext>, IUserTestS
         {
             var userTestAdd = new UserTestEntity
             {
-                UserId = userTest.UserId,
                 TestId = userTest.TestId,
                 IsTestCompleted = userTest.IsTestCompleted,
                 Mark = userTest.Mark

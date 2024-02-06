@@ -42,4 +42,13 @@ public class TestController : ControllerBase
         var result = await _testService.GetPassedTests(userId);
         return Ok(result);
     }
+
+    [HttpPost("submitAnswers")]
+    [ProducesResponseType((int)HttpStatusCode.OK)]
+    public async Task<IActionResult> SubmitAnswers([FromBody] UserTestViewModel complitedTest)
+    {
+        var userId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value;
+        await _testService.SubmitAnswersAsync(userId, complitedTest);
+        return Ok();
+    }
 }
