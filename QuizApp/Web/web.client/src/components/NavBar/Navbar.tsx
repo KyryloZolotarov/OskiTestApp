@@ -31,7 +31,7 @@ const Navbar = () => {
             <AppBar position="static">
                 <Toolbar variant="dense">
                     <Typography variant="h5" color="inherit" component="div" sx={{ mr: 2 }}>
-                        OskiTest
+                        Quiz
                     </Typography>
                     <Button onClick={() => handleAvailableClick()} variant="text" color="inherit" sx={{ mr: 2 }}>Available Tests</Button>
                     <Button onClick={() => handlePassedClick()} variant="text" color="inherit" sx={{ mr: 2 }}>Passed Tests</Button>
